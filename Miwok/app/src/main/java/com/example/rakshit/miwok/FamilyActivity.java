@@ -1,13 +1,36 @@
 package com.example.rakshit.miwok;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 
-public class FamilyActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class FamilyActivity extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family);
+        setContentView(R.layout.sub_activity);
+
+        ArrayList<WordsList> nums = new ArrayList<WordsList>(10);
+
+        nums.add(new WordsList("Lutti", "One"));
+        nums.add(new WordsList("Otiiko", "Two"));
+        nums.add(new WordsList("Tolookosu", "Three"));
+        nums.add(new WordsList("Oyyisa", "Four"));
+        nums.add(new WordsList("Massokka", "Five"));
+        nums.add(new WordsList("Temmokka", "Six"));
+        nums.add(new WordsList("Kenekaku", "Seven"));
+        nums.add(new WordsList("Kawinta", "Eight"));
+        nums.add(new WordsList("Wo'e", "Nine"));
+        nums.add(new WordsList("Na'aacha", "Ten"));
+
+        WordsListAdapter familyAdapter = new WordsListAdapter(this, nums);
+
+        ListView list = (ListView)findViewById(R.id.list);
+        list.setAdapter(familyAdapter);
     }
 }

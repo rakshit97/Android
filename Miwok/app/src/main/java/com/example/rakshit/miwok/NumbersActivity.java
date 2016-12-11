@@ -2,7 +2,6 @@ package com.example.rakshit.miwok;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -14,25 +13,24 @@ public class NumbersActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_numbers);
+        setContentView(R.layout.sub_activity);
 
-        ArrayList <String> eng = new ArrayList<String>(10);
-        eng.add("one");
-        eng.add("two");
-        eng.add("three");
-        eng.add("four");
-        eng.add("five");
-        eng.add("six");
-        eng.add("seven");
-        eng.add("eight");
-        eng.add("nine");
-        eng.add("ten");
+        ArrayList<WordsList> nums = new ArrayList<WordsList>(10);
 
-        //LinearLayout rootView = (LinearLayout)findViewById(R.id.activity_numbers);
-        //TextView[] nums = new TextView[10];
-        ArrayAdapter<String> numsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, eng);
+        nums.add(new WordsList("Lutti", "One"));
+        nums.add(new WordsList("Otiiko", "Two"));
+        nums.add(new WordsList("Tolookosu", "Three"));
+        nums.add(new WordsList("Oyyisa", "Four"));
+        nums.add(new WordsList("Massokka", "Five"));
+        nums.add(new WordsList("Temmokka", "Six"));
+        nums.add(new WordsList("Kenekaku", "Seven"));
+        nums.add(new WordsList("Kawinta", "Eight"));
+        nums.add(new WordsList("Wo'e", "Nine"));
+        nums.add(new WordsList("Na'aacha", "Ten"));
 
-        ListView list = (ListView)findViewById(R.id.nums_list);
+        WordsListAdapter numsAdapter = new WordsListAdapter(this, nums);
+
+        ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(numsAdapter);
     }
 }
