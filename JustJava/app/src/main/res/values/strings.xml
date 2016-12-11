@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">JustJava</string>
+    <string name="qty_label">Quantity</string>
+    <string name="tpngs_label">Toppings</string>
+    <string name="decr">-</string>
+    <string name="incr">+</string>
+    <string name="qty">0</string>
+    <string name="price_label">PRICE</string>
+    <string name="order">ORDER</string>
+    <string name="total">Total = </string>
+    <string name="summary_label">ORDER SUMMARY</string>
+    <string name="name">Name</string>
+    <string name="price">Price</string>
+    <string name="thanks">Thank you!</string>
+    <string name="confirm">CONFIRM ORDER</string>
+    <string name="cream">Whipped Cream</string>
+    <string name="choco">Chocolate</string>
+</resources>

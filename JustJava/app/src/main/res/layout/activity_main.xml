@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.rakshit.justjava.MainActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/name_input"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:hint="@string/name"
+        android:inputType="textCapWords"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_input"
+        android:id="@+id/tpngs"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/tpngs_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tpngs_label"
+            android:textAllCaps="true"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:id="@+id/cream"
+            android:text="@string/cream"
+            android:textSize="16sp"
+            android:paddingLeft="12dp"
+            android:onClick="toppings"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/choco"
+            android:text="@string/choco"
+            android:textSize="16sp"
+            android:paddingLeft="12dp"
+            android:onClick="toppings"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/qty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tpngs"
+        android:paddingLeft="16dp"
+        android:text="@string/qty_label"
+        android:textAllCaps="true"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/qty"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:onClick="decr"
+            android:text="@string/decr"/>
+
+        <TextView
+            android:id="@+id/qty_tv"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qty"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingTop="16dp"
+            android:text="@string/qty"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:onClick="incr"
+            android:text="@string/incr"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lin"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/price_label"
+        android:textAllCaps="true"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/order_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:onClick="submitOrder"
+        android:text="@string/order"
+        android:textSize="20sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/order_button"
+        android:background="@android:color/black"/>
+</RelativeLayout>
