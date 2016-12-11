@@ -17,16 +17,16 @@ public class PhrasesActivity extends AppCompatActivity
 
         ArrayList<WordsList> nums = new ArrayList<WordsList>(10);
 
-        nums.add(new WordsList("Lutti", "One"));
-        nums.add(new WordsList("Otiiko", "Two"));
-        nums.add(new WordsList("Tolookosu", "Three"));
-        nums.add(new WordsList("Oyyisa", "Four"));
-        nums.add(new WordsList("Massokka", "Five"));
-        nums.add(new WordsList("Temmokka", "Six"));
-        nums.add(new WordsList("Kenekaku", "Seven"));
-        nums.add(new WordsList("Kawinta", "Eight"));
-        nums.add(new WordsList("Wo'e", "Nine"));
-        nums.add(new WordsList("Na'aacha", "Ten"));
+        nums.add(new WordsList("Minto wuksus", "Where are you going?"));
+        nums.add(new WordsList("Tinnә oyaase'nә", "What is your name?"));
+        nums.add(new WordsList("Oyaaset ...", "My name is ..."));
+        nums.add(new WordsList("Michәksәs?", "How are you feeling?"));
+        nums.add(new WordsList("Kuchi achit", "I’m feeling good."));
+        nums.add(new WordsList("Tәәnәs'aa?", "Are you coming?"));
+        nums.add(new WordsList("Hәә’әәnәm", "Yes, I’m coming."));
+        nums.add(new WordsList("әәnәm", "I’m coming."));
+        nums.add(new WordsList("Yoowutis", "Let’s go."));
+        nums.add(new WordsList("әnni'nem", "Come here."));
 
         WordsListAdapter phrasesAdapter = new WordsListAdapter(this, nums);
 

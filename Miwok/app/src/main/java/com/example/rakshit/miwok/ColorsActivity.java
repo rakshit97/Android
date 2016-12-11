@@ -15,18 +15,16 @@ public class ColorsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sub_activity);
 
-        ArrayList<WordsList> nums = new ArrayList<WordsList>(10);
+        ArrayList<WordsList> nums = new ArrayList<WordsList>(8);
 
-        nums.add(new WordsList("Lutti", "One"));
-        nums.add(new WordsList("Otiiko", "Two"));
-        nums.add(new WordsList("Tolookosu", "Three"));
-        nums.add(new WordsList("Oyyisa", "Four"));
-        nums.add(new WordsList("Massokka", "Five"));
-        nums.add(new WordsList("Temmokka", "Six"));
-        nums.add(new WordsList("Kenekaku", "Seven"));
-        nums.add(new WordsList("Kawinta", "Eight"));
-        nums.add(new WordsList("Wo'e", "Nine"));
-        nums.add(new WordsList("Na'aacha", "Ten"));
+        nums.add(new WordsList("Weṭeṭṭi", "Red"));
+        nums.add(new WordsList("Chokokki", "Green"));
+        nums.add(new WordsList("Takaakki", "Brown"));
+        nums.add(new WordsList("Topoppi", "Gray"));
+        nums.add(new WordsList("Kululli", "Black"));
+        nums.add(new WordsList("Kelelli", "White"));
+        nums.add(new WordsList("Topiisә", "Dusty Yellow"));
+        nums.add(new WordsList("Chiwiiṭә", "Mustard Yellow"));
 
         WordsListAdapter colorsAdapter = new WordsListAdapter(this, nums);
 

@@ -17,16 +17,16 @@ public class FamilyActivity extends AppCompatActivity
 
         ArrayList<WordsList> nums = new ArrayList<WordsList>(10);
 
-        nums.add(new WordsList("Lutti", "One"));
-        nums.add(new WordsList("Otiiko", "Two"));
-        nums.add(new WordsList("Tolookosu", "Three"));
-        nums.add(new WordsList("Oyyisa", "Four"));
-        nums.add(new WordsList("Massokka", "Five"));
-        nums.add(new WordsList("Temmokka", "Six"));
-        nums.add(new WordsList("Kenekaku", "Seven"));
-        nums.add(new WordsList("Kawinta", "Eight"));
-        nums.add(new WordsList("Wo'e", "Nine"));
-        nums.add(new WordsList("Na'aacha", "Ten"));
+        nums.add(new WordsList("әpә", "Father"));
+        nums.add(new WordsList("әṭa", "Mother"));
+        nums.add(new WordsList("Angsi", "Son"));
+        nums.add(new WordsList("Tune", "Daughter"));
+        nums.add(new WordsList("Taachi", "Older Brother"));
+        nums.add(new WordsList("Chalitti", "Younger Brother"));
+        nums.add(new WordsList("Teṭe", "Older Sister"));
+        nums.add(new WordsList("Kolliti", "Younger Sister"));
+        nums.add(new WordsList("ama", "Grandmother"));
+        nums.add(new WordsList("Paapa", "Grandfather"));
 
         WordsListAdapter familyAdapter = new WordsListAdapter(this, nums);
 
