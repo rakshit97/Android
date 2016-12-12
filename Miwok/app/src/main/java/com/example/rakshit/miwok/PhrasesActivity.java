@@ -15,20 +15,20 @@ public class PhrasesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sub_activity);
 
-        ArrayList<WordsList> nums = new ArrayList<WordsList>(10);
+        ArrayList<WordsList> phrases = new ArrayList<WordsList>(10);
 
-        nums.add(new WordsList("Minto wuksus", "Where are you going?"));
-        nums.add(new WordsList("Tinnә oyaase'nә", "What is your name?"));
-        nums.add(new WordsList("Oyaaset ...", "My name is ..."));
-        nums.add(new WordsList("Michәksәs?", "How are you feeling?"));
-        nums.add(new WordsList("Kuchi achit", "I’m feeling good."));
-        nums.add(new WordsList("Tәәnәs'aa?", "Are you coming?"));
-        nums.add(new WordsList("Hәә’әәnәm", "Yes, I’m coming."));
-        nums.add(new WordsList("әәnәm", "I’m coming."));
-        nums.add(new WordsList("Yoowutis", "Let’s go."));
-        nums.add(new WordsList("әnni'nem", "Come here."));
+        phrases.add(new WordsList("Minto wuksus", "Where are you going?"));
+        phrases.add(new WordsList("Tinnә oyaase'nә", "What is your name?"));
+        phrases.add(new WordsList("Oyaaset ...", "My name is ..."));
+        phrases.add(new WordsList("Michәksәs?", "How are you feeling?"));
+        phrases.add(new WordsList("Kuchi achit", "I’m feeling good."));
+        phrases.add(new WordsList("Tәәnәs'aa?", "Are you coming?"));
+        phrases.add(new WordsList("Hәә’әәnәm", "Yes, I’m coming."));
+        phrases.add(new WordsList("әәnәm", "I’m coming."));
+        phrases.add(new WordsList("Yoowutis", "Let’s go."));
+        phrases.add(new WordsList("әnni'nem", "Come here."));
 
-        WordsListAdapter phrasesAdapter = new WordsListAdapter(this, nums);
+        WordsListAdapter phrasesAdapter = new WordsListAdapter(this, phrases, R.color.category_phrases);
 
         ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(phrasesAdapter);
