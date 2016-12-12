@@ -21,7 +21,7 @@ public class WordsListAdapter extends ArrayAdapter<WordsList>
     public WordsListAdapter(Activity context, ArrayList<WordsList> words, int color)
     {
         super(context, 0, words);
-        this.color=color;
+        this.color = color;
     }
 
     @NonNull
