@@ -1,5 +1,7 @@
 package com.example.rakshit.miwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ public class ColorsActivity extends AppCompatActivity
 {
     MediaPlayer myPlayer;
 
+    private AudioManager audioManager;
+
     private MediaPlayer.OnCompletionListener complistener = new MediaPlayer.OnCompletionListener()
     {
         @Override
@@ -22,11 +26,29 @@ public class ColorsActivity extends AppCompatActivity
         }
     };
 
+    AudioManager.OnAudioFocusChangeListener afListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int i)
+        {
+            if(i==AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || i==AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK)
+            {
+                myPlayer.pause();
+                myPlayer.seekTo(0);
+            }
+            else if(i==AudioManager.AUDIOFOCUS_GAIN)
+                myPlayer.start();
+            else if(i==AudioManager.AUDIOFOCUS_LOSS)
+                releasePlayer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sub_activity);
+
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         final ArrayList<WordsList> colors = new ArrayList<WordsList>(8);
 
@@ -50,10 +72,14 @@ public class ColorsActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 releasePlayer();
-                myPlayer = myPlayer.create(ColorsActivity.this, colors.get(i).getaudio_src());
-                myPlayer.start();
 
-                myPlayer.setOnCompletionListener(complistener);
+                int status = audioManager.requestAudioFocus(afListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                if(status==AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    myPlayer = myPlayer.create(ColorsActivity.this, colors.get(i).getaudio_src());
+                    myPlayer.start();
+
+                    myPlayer.setOnCompletionListener(complistener);
+                }
             }
         });
     }
@@ -64,6 +90,7 @@ public class ColorsActivity extends AppCompatActivity
         {
             myPlayer.release();
             myPlayer = null;
+            audioManager.abandonAudioFocus(afListener);
         }
     }
 
