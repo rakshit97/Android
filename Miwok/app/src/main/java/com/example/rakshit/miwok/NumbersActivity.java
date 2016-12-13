@@ -13,7 +13,15 @@ public class NumbersActivity extends AppCompatActivity
 {
     MediaPlayer myPlayer;
 
-    @Override
+    private MediaPlayer.OnCompletionListener complistener = new MediaPlayer.OnCompletionListener()
+    {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer)
+        {
+            releasePlayer();
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -42,9 +50,28 @@ public class NumbersActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
+                releasePlayer();
                 myPlayer = myPlayer.create(NumbersActivity.this, nums.get(i).getaudio_src());
                 myPlayer.start();
+
+                myPlayer.setOnCompletionListener(complistener);
             }
         });
+    }
+
+    private void releasePlayer()
+    {
+        if(myPlayer!=null)
+        {
+            myPlayer.release();
+            myPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        releasePlayer();
     }
 }
