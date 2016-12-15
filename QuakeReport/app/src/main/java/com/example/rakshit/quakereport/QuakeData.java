@@ -4,18 +4,18 @@ public class QuakeData
 {
     private double mag;
     private String place;
-    private String date;
+    private long time;
 
-    QuakeData(double mag, String place, String date)
+    QuakeData(double mag, String place, long time)
     {
         this.mag = mag;
         this.place = place;
-        this.date = date;
+        this.time = time;
     }
 
-    public String getMag()
+    public double getMag()
     {
-        return Double.toString(mag);
+        return mag;
     }
 
     public String getPlace()
@@ -23,8 +23,8 @@ public class QuakeData
         return place;
     }
 
-    public String getDate()
+    public long getTime()
     {
-        return date;
+        return time;
     }
 }

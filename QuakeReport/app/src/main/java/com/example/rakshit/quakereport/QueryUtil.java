@@ -28,32 +28,26 @@ public class QueryUtil
 
     public static ArrayList<QuakeData> extractData()
     {
-        int j = 0;
         ArrayList<QuakeData> data = new ArrayList<QuakeData>(10);
         try
         {
             JSONObject root = new JSONObject(SAMPLE_JSON_RESPONSE);
-            j++;
             JSONArray features = root.getJSONArray("features");
-            j++;
 
             for (int i = 0; i < features.length(); i++)
             {
                 JSONObject quake_data = features.getJSONObject(i);
                 JSONObject props = quake_data.getJSONObject("properties");
-                j++;
                 double mag = props.getDouble("mag");
-                j++;
                 String place = props.getString("place");
-                j++;
                 long time = props.getLong("time");
-                j++;
-                data.add(new QuakeData(mag, place, Long.toString(time)));
+
+                data.add(new QuakeData(mag, place, time));
             }
         }
         catch(JSONException e)
         {
-            Log.e("QueryUtil", "JSON exception"+j);
+            Log.e("QueryUtil", "JSON exception");
         }
 
         return data;
