@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity
         data.add(new QuakeData(1.6, "Paris", "Oct 30, 2011"));
 
         ListView data_list = (ListView)findViewById(R.id.list);
-        //ArrayAdapter<QuakeData> adapter = new ArrayAdapter<QuakeData>(this, android.R.layout.simple_list_item_1, data);
+        QuakeAdapter adapter = new QuakeAdapter(this, data);
 
-        //data_list.setAdapter(adapter);
+        data_list.setAdapter(adapter);
     }
 }

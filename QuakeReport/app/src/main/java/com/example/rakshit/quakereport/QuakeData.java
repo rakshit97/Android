@@ -13,9 +13,9 @@ public class QuakeData
         this.date = date;
     }
 
-    public double getMag()
+    public String getMag()
     {
-        return mag;
+        return String.valueOf(mag);
     }
 
     public String getPlace()
