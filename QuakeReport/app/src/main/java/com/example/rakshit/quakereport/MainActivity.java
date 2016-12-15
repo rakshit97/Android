@@ -1,8 +1,7 @@
 package com.example.rakshit.quakereport;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -16,19 +15,19 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<String> data = new ArrayList<String>(7);
+        ArrayList<QuakeData> data = new ArrayList<QuakeData>(7);
 
-        data.add("San Francisco");
-        data.add("London");
-        data.add("Tokyo");
-        data.add("Mexico City");
-        data.add("Moscow");
-        data.add("Rio de Janeiro");
-        data.add("Paris");
+        data.add(new QuakeData(7.2, "San Francisco", "Feb 2, 2016"));
+        data.add(new QuakeData(6.1, "London", "July 20, 2015"));
+        data.add(new QuakeData(3.9, "Tokyo", "Nov 10, 2014"));
+        data.add(new QuakeData(5.4, "Mexico City", "May 3, 2014"));
+        data.add(new QuakeData(2.8, "Moscow", "May 31, 2013"));
+        data.add(new QuakeData(4.9, "Rio de Janeiro", "Aug 19, 2012"));
+        data.add(new QuakeData(1.6, "Paris", "Oct 30, 2011"));
 
         ListView data_list = (ListView)findViewById(R.id.list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
+        //ArrayAdapter<QuakeData> adapter = new ArrayAdapter<QuakeData>(this, android.R.layout.simple_list_item_1, data);
 
-        data_list.setAdapter(adapter);
+        //data_list.setAdapter(adapter);
     }
 }
