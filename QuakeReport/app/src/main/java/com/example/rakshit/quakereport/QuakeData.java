@@ -15,7 +15,7 @@ public class QuakeData
 
     public String getMag()
     {
-        return String.valueOf(mag);
+        return Double.toString(mag);
     }
 
     public String getPlace()
