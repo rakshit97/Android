@@ -8,8 +8,9 @@
     android:padding="16dp">
     
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:id="@+id/mag_container"
         tools:text="5.3"/>
     
@@ -17,9 +18,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/place_container"
-        android:gravity="right"
-        android:paddingRight="32dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         tools:text="San Francisco"/>
 
     <TextView
