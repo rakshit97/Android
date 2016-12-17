@@ -1,7 +1,9 @@
 package com.example.rakshit.quakereport;
 
 import android.app.Activity;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +74,9 @@ public class QuakeAdapter extends ArrayAdapter<QuakeData>
         tv = (TextView)listItemView.findViewById(R.id.mag_container);
         tv.setText(magToDisplay);
 
+        GradientDrawable mag_circle = (GradientDrawable)tv.getBackground();
+        mag_circle.setColor(getMagColor(curr.getMag()));
+
         tv = (TextView)listItemView.findViewById(R.id.offset_container);
         tv.setText(offset);
 
@@ -85,5 +90,31 @@ public class QuakeAdapter extends ArrayAdapter<QuakeData>
         tv.setText(timeToDisplay);
 
         return listItemView;
+    }
+
+    public int getMagColor(double mag)
+    {
+        if(mag>=0 && mag<2)
+            return ContextCompat.getColor(getContext(), R.color.magnitude1);
+        else if(mag>=2 && mag<3)
+            return ContextCompat.getColor(getContext(), R.color.magnitude2);
+        else if(mag>=3 && mag<4)
+            return ContextCompat.getColor(getContext(), R.color.magnitude3);
+        else if(mag>=4 && mag<5)
+            return ContextCompat.getColor(getContext(), R.color.magnitude4);
+        else if(mag>=5 && mag<6)
+            return ContextCompat.getColor(getContext(), R.color.magnitude5);
+        else if(mag>=6 && mag<7)
+            return ContextCompat.getColor(getContext(), R.color.magnitude6);
+        else if(mag>=7 && mag<8)
+            return ContextCompat.getColor(getContext(), R.color.magnitude7);
+        else if(mag>=8 && mag<9)
+            return ContextCompat.getColor(getContext(), R.color.magnitude8);
+        else if(mag>=9 && mag<10)
+            return ContextCompat.getColor(getContext(), R.color.magnitude9);
+        else if(mag>=10)
+            return ContextCompat.getColor(getContext(), R.color.magnitude10plus);
+        else
+            return -1;
     }
 }

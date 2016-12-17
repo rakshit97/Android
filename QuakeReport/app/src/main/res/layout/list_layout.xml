@@ -6,40 +6,75 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
-    
+
     <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:id="@+id/mag_container"
-        tools:text="5.3"/>
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:background="@drawable/mag_circle"
+        tools:text="5.3"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/offset_container"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="56km N of"/>
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/offset_container"
+            android:ellipsize="marquee"
+            android:fontFamily="sans-serif-medium"
+            tools:text="56km N of"
+            android:textColor="@color/offsetColor"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/primary_location_container"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:textSize="16sp"
+            tools:text="Long placeholder location that should wrap to more than 2 lines of text"
+            android:textColor="@color/locationColor"/>
+    </LinearLayout>
     
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/primary_location_container"
-        android:layout_weight="1"
-        tools:text="San Francisco"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="16dp">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/date_container"
-        android:layout_weight="1"
-        tools:text="Feb 2, 2016"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/date_container"
+            android:layout_gravity="right"
+            android:textColor="@color/offsetColor"
+            android:textSize="12sp"
+            tools:text="Feb 2, 2016"/>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/time_container"
-        android:layout_weight="1"
-        tools:text="8:22 PM"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/time_container"
+            android:layout_gravity="right"
+            android:textColor="@color/offsetColor"
+            android:textSize="12sp"
 
+            tools:text="8:22 PM"/>
+
+    </LinearLayout>
 </LinearLayout>
