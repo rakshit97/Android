@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class QuakeAdapter extends ArrayAdapter<QuakeData>
@@ -40,7 +42,7 @@ public class QuakeAdapter extends ArrayAdapter<QuakeData>
 
         SimpleDateFormat formatter;
         Date date = new Date(curr.getTime());
-
+        Log.i("QueryUtils", "Date = " + date);
         String offset, primary_location;
         String place = curr.getPlace();
 
@@ -48,9 +50,10 @@ public class QuakeAdapter extends ArrayAdapter<QuakeData>
         mag_formatter = new DecimalFormat("0.0");
         String magToDisplay = mag_formatter.format(curr.getMag());
 
-        formatter = new SimpleDateFormat("MMM DD, yyyy");
+        formatter = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
         String dateToDisplay = formatter.format(date);
-        formatter = new SimpleDateFormat(("h:mm a"));
+        Log.i("QueryUtils", "Date = " + dateToDisplay);
+        formatter = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
         String timeToDisplay = formatter.format(date);
 
 
@@ -82,6 +85,7 @@ public class QuakeAdapter extends ArrayAdapter<QuakeData>
 
         tv = (TextView)listItemView.findViewById(R.id.primary_location_container);
         tv.setText(primary_location);
+        tv.setSelected(true);
 
         tv = (TextView)listItemView.findViewById(R.id.date_container);
         tv.setText(dateToDisplay);

@@ -44,7 +44,9 @@
             android:layout_height="match_parent"
             android:id="@+id/primary_location_container"
             android:ellipsize="marquee"
-            android:maxLines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textSize="16sp"
             tools:text="Long placeholder location that should wrap to more than 2 lines of text"
             android:textColor="@color/locationColor"/>
