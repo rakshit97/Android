@@ -1,22 +1,26 @@
 package com.example.rakshit.quakereport;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import static com.example.rakshit.quakereport.QueryUtil.fetchData;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<QuakeData>>
 {
     QuakeAdapter adapter;
     private static final String USGS_REQUEST_URL =
             "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
+    private static final int EARTHQUAKE_LOADER_ID = 1;
+
+    TextView empty_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,10 +28,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EarthQuakeAsyncTask task = new EarthQuakeAsyncTask();
-        task.execute(USGS_REQUEST_URL);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
 
         ListView data_list = (ListView)findViewById(R.id.list);
+        empty_tv = (TextView)findViewById(R.id.empty_view);
+        data_list.setEmptyView(empty_tv);
         adapter = new QuakeAdapter(this, new ArrayList<QuakeData>(10));
 
         data_list.setAdapter(adapter);
@@ -45,23 +51,26 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, ArrayList<QuakeData>>
+    @Override
+    public Loader<ArrayList<QuakeData>> onCreateLoader(int i, Bundle bundle)
     {
-        @Override
-        protected ArrayList<QuakeData> doInBackground(String... urls)
-        {
-            if(urls.length<1 || urls[0]==null)
-                return null;
+        return new DataLoader(this, USGS_REQUEST_URL);
+    }
 
-            return fetchData(urls[0]);
-        }
+    @Override
+    public void onLoadFinished(Loader<ArrayList<QuakeData>> loader, ArrayList<QuakeData> quakeDatas)
+    {
+        findViewById(R.id.progress).setVisibility(View.GONE);
+        adapter.clear();
+        if(quakeDatas!=null && !quakeDatas.isEmpty())
+            adapter.addAll(quakeDatas);
+        else
+            empty_tv.setText(getString(R.string.no_data));
+    }
 
-        @Override
-        protected void onPostExecute(ArrayList<QuakeData> data)
-        {
-            adapter.clear();
-            if(data!=null && !data.isEmpty())
-                adapter.addAll(data);
-        }
+    @Override
+    public void onLoaderReset(Loader<ArrayList<QuakeData>> loader)
+    {
+        adapter.clear();
     }
 }
