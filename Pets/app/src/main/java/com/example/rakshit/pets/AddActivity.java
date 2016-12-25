@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.rakshit.pets.data.PetsContract.tableCols;
+
 public class AddActivity extends AppCompatActivity
 {
 
@@ -42,18 +44,18 @@ public class AddActivity extends AppCompatActivity
                 if(!TextUtils.isEmpty(selected))
                 {
                     if(selected.equals(getString(R.string.gender_male)))
-                        gender = 1;
+                        gender = tableCols.GENDER_MALE;
                     if(selected.equals(getString(R.string.gender_female)))
-                        gender = 2;
+                        gender = tableCols.GENDER_FEMALE;
                     else
-                        gender = 0;
+                        gender = tableCols.GENDER_UNKNOWN;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
-                gender = 0;
+                gender = tableCols.GENDER_UNKNOWN;
             }
         });
     }

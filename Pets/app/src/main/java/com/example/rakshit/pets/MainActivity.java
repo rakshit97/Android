@@ -1,12 +1,19 @@
 package com.example.rakshit.pets;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
+import com.example.rakshit.pets.data.PetsDBHelper;
+import com.example.rakshit.pets.data.PetsContract.tableCols;
+
 
 public class MainActivity extends AppCompatActivity
 {
@@ -27,6 +34,26 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
+
+        displayDatabaseInfo();
+    }
+
+    private void displayDatabaseInfo()
+    {
+        PetsDBHelper DbHelper = new PetsDBHelper(this);
+
+        SQLiteDatabase db = DbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableCols.TABLE_NAME, null);
+        try
+        {
+            TextView displayView = (TextView) findViewById(R.id.pet_tv);
+            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+        }
+        finally
+        {
+            cursor.close();
+        }
     }
 
     @Override
