@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Pets</string>
+    <string name="dummy_data">Insert dummy data</string>
+    <string name="del_all">Delete all records</string>
+    <string name="add">Add a pet</string>
 </resources>
