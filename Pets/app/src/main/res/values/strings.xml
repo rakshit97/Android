@@ -2,5 +2,15 @@
     <string name="app_name">Pets</string>
     <string name="dummy_data">Insert dummy data</string>
     <string name="del_all">Delete all records</string>
+    <string name="del">Delete</string>
     <string name="add">Add a pet</string>
+    <string name="save">Save</string>
+    <string name="overview">Overview</string>
+    <string name="name">Name</string>
+    <string name="breed">Breed</string>
+    <string name="gender">Gender</string>
+    <string name="gender_unknown">Unknown</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="weight">Weight</string>
 </resources>

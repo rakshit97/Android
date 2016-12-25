@@ -7,12 +7,12 @@
 
     <item
         android:title="@string/dummy_data"
-        android:id="@+id/dummy"
+        android:id="@+id/options_add_dummy"
         app:showAsAction="never"/>
 
     <item
         android:title="@string/del_all"
-        android:id="@+id/del_all"
+        android:id="@+id/options_del_all"
         app:showAsAction="never"/>
 
 </menu>

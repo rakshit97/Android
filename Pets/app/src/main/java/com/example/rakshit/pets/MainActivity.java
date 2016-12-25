@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity
     {
         switch(item.getItemId())
         {
-            case R.id.dummy: return true;
-            case R.id.del_all: return true;
+            case R.id.options_add_dummy: return true;
+            case R.id.options_del_all: return true;
         }
         return super.onOptionsItemSelected(item);
     }
