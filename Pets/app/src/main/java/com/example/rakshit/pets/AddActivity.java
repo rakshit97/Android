@@ -1,7 +1,6 @@
 package com.example.rakshit.pets;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -24,12 +23,19 @@ public class AddActivity extends AppCompatActivity
 
     private Spinner genderSpinner;
     private int gender;
+    private EditText name;
+    private EditText breed;
+    private EditText weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        name = (EditText)findViewById(R.id.name);
+        breed = (EditText)findViewById(R.id.breed);
+        weight = (EditText)findViewById(R.id.weight);
 
         genderSpinner = (Spinner)findViewById(R.id.spinner);
         setupSpinner();
@@ -72,39 +78,29 @@ public class AddActivity extends AppCompatActivity
         PetsDBHelper dbHelper = new PetsDBHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String name = findViewById(R.id.name).toString().trim();
-        String breed = findViewById(R.id.breed).toString().trim();
-        String weight = findViewById(R.id.weight).toString().trim();
+        String val_name = name.getText().toString().trim();
+        String val_breed = breed.getText().toString().trim();
+        int val_weight = Integer.valueOf(weight.getText().toString().trim());
 
         ContentValues values = new ContentValues();
-        values.put(tableCols.COL_NAME, name);
-        values.put(tableCols.COL_BREED, breed);
-        values.put(tableCols.COLUMN_GENDER, gender);
-        values.put(tableCols.COLUMN_WEIGHT, weight);
+        values.put(tableCols.COL_NAME, val_name);
+        values.put(tableCols.COL_BREED, val_breed);
+        values.put(tableCols.COL_GENDER, gender);
+        values.put(tableCols.COL_WEIGHT, val_weight);
 
         long rowId = db.insert(tableCols.TABLE_NAME, null, values);
         if(rowId!=-1)
             Toast.makeText(this, "Added pet with row id "+rowId, Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, "Error adding pet" , Toast.LENGTH_SHORT).show();
-
-        goBack();
     }
 
     private void clearData()
     {
-        EditText name = (EditText)findViewById(R.id.name);
         name.setText("");
-        EditText breed = (EditText)findViewById(R.id.breed);
         breed.setText("");
-        EditText weight = (EditText)findViewById(R.id.weight);
         weight.setText("");
         genderSpinner.setSelection(0);
-    }
-
-    private void goBack()
-    {
-        startActivity(new Intent(AddActivity.this, MainActivity.class));
     }
 
     @Override
@@ -121,6 +117,7 @@ public class AddActivity extends AppCompatActivity
         {
             case R.id.options_save:
                 insertPet();
+                finish();
                 return true;
             case R.id.option_del:
                 clearData();

@@ -51,11 +51,28 @@ public class MainActivity extends AppCompatActivity
 
         SQLiteDatabase db = DbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + tableCols.TABLE_NAME, null);
+        String[] projection = {tableCols.COL_ID, tableCols.COL_NAME, tableCols.COL_BREED, tableCols.COL_GENDER, tableCols.COL_WEIGHT};
+
+        Cursor cursor = db.query(tableCols.TABLE_NAME, projection, null, null, null, null, null);
         try
         {
             TextView displayView = (TextView) findViewById(R.id.pet_tv);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+            displayView.setText("Number of rows in pets database table: " + cursor.getCount()+"\n");
+
+            while(cursor.moveToNext())
+            {
+                displayView.append("\n" + cursor.getInt(0) + " - " + cursor.getString(1) + " - "
+                        + cursor.getString(2) + " - ");
+                if(cursor.getInt(3)==0)
+                    displayView.append("Unknown Gender");
+                else if(cursor.getInt(3)==1)
+                    displayView.append("Male");
+                else
+                    displayView.append("Female");
+
+                displayView.append(" - " + cursor.getInt(4));
+            }
+
         }
         finally
         {
@@ -71,8 +88,8 @@ public class MainActivity extends AppCompatActivity
 
         values.put(tableCols.COL_NAME, "toto");
         values.put(tableCols.COL_BREED, "terrier");
-        values.put(tableCols.COLUMN_GENDER, tableCols.GENDER_MALE);
-        values.put(tableCols.COLUMN_WEIGHT, 10);
+        values.put(tableCols.COL_GENDER, tableCols.GENDER_MALE);
+        values.put(tableCols.COL_WEIGHT, 10);
 
         long rowId = db.insert(tableCols.TABLE_NAME, null, values);
         if(rowId!=-1)

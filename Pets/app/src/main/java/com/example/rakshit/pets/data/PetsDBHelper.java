@@ -14,8 +14,8 @@ public class PetsDBHelper extends SQLiteOpenHelper
             + "( " + tableCols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT"
             + ", " + tableCols.COL_NAME + " TEXT NOT NULL"
             + ", " + tableCols.COL_BREED + " TEXT"
-            + ", " + tableCols.COLUMN_GENDER + " INTEGER NOT NULL"
-            + ", " + tableCols.COLUMN_WEIGHT + " INTEGER);";
+            + ", " + tableCols.COL_GENDER + " INTEGER NOT NULL"
+            + ", " + tableCols.COL_WEIGHT + " INTEGER);";
     private static final String DELETE_DB = "";
 
     public PetsDBHelper(Context context)
