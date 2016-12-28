@@ -25,14 +25,15 @@
 
             <EditText
                 style="@style/EditorFieldStyle"
+                android:id="@+id/name"
                 android:hint="@string/name"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
 
             <EditText
                 style="@style/EditorFieldStyle"
+                android:id="@+id/breed"
                 android:hint="@string/breed"
-                android:inputType="textCapWords"
-                android:layout_height="wrap_content" />
+                android:inputType="textCapWords" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,6 +76,7 @@
 
             <EditText
                 style="@style/EditorFieldStyle"
+                android:id="@+id/weight"
                 android:hint="@string/weight"
                 android:inputType="number"/>
 

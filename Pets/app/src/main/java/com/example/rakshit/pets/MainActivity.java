@@ -1,11 +1,13 @@
 package com.example.rakshit.pets;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +36,12 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
+    }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
         displayDatabaseInfo();
     }
 
@@ -56,6 +63,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void insertDummyData()
+    {
+        PetsDBHelper dbHelper = new PetsDBHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(tableCols.COL_NAME, "toto");
+        values.put(tableCols.COL_BREED, "terrier");
+        values.put(tableCols.COLUMN_GENDER, tableCols.GENDER_MALE);
+        values.put(tableCols.COLUMN_WEIGHT, 10);
+
+        long rowId = db.insert(tableCols.TABLE_NAME, null, values);
+        if(rowId!=-1)
+            displayDatabaseInfo();
+        else
+            Log.e("MainActivity", "Cannot insert data");
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -68,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     {
         switch(item.getItemId())
         {
-            case R.id.options_add_dummy: return true;
+            case R.id.options_add_dummy: insertDummyData();return true;
             case R.id.options_del_all: return true;
         }
         return super.onOptionsItemSelected(item);
