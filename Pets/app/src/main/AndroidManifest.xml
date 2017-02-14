@@ -25,6 +25,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
+        
+        <provider
+            android:authorities="com.example.rakshit.pets"
+            android:exported="false"
+            android:name=".data.PetsProvider" />
     </application>
 
 </manifest>
