@@ -47,13 +47,9 @@ public class MainActivity extends AppCompatActivity
 
     private void displayDatabaseInfo()
     {
-        PetsDBHelper DbHelper = new PetsDBHelper(this);
-
-        SQLiteDatabase db = DbHelper.getReadableDatabase();
-
         String[] projection = {tableCols.COL_ID, tableCols.COL_NAME, tableCols.COL_BREED, tableCols.COL_GENDER, tableCols.COL_WEIGHT};
 
-        Cursor cursor = db.query(tableCols.TABLE_NAME, projection, null, null, null, null, null);
+        Cursor cursor = getContentResolver().query(tableCols.CONTENT_URI, projection, null, null, null);
         try
         {
             TextView displayView = (TextView) findViewById(R.id.pet_tv);

@@ -1,11 +1,14 @@
 package com.example.rakshit.pets.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import com.example.rakshit.pets.data.PetsContract.tableCols;
 
 public class PetsProvider extends ContentProvider
 {
@@ -30,9 +33,27 @@ public class PetsProvider extends ContentProvider
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1)
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
-        return null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor;
+
+        int match = uri_matcher.match(uri);
+        switch (match)
+        {
+            case WHOLE_TABLE:
+                cursor = db.query(tableCols.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case SPECIFIC_COLUMN:
+                selection = tableCols.COL_ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = db.query(tableCols.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            default:
+                throw new IllegalArgumentException("Cannot query invalid Uri " +uri);
+        }
+
+        return cursor;
     }
 
     @Nullable
