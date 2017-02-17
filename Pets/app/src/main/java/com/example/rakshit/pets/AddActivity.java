@@ -58,7 +58,7 @@ public class AddActivity extends AppCompatActivity
                 {
                     if(selected.equals(getString(R.string.gender_male)))
                         gender = tableCols.GENDER_MALE;
-                    if(selected.equals(getString(R.string.gender_female)))
+                    else if(selected.equals(getString(R.string.gender_female)))
                         gender = tableCols.GENDER_FEMALE;
                     else
                         gender = tableCols.GENDER_UNKNOWN;

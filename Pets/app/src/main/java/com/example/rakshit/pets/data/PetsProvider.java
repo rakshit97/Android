@@ -3,14 +3,12 @@ package com.example.rakshit.pets.data;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
 public class PetsProvider extends ContentProvider
 {
     private PetsDBHelper dbHelper;
-    SQLiteDatabase db = dbHelper.getReadableDatabase();
 
     @Override
     public boolean onCreate()
