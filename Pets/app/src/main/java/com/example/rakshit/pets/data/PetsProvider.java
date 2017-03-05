@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+
 import com.example.rakshit.pets.data.PetsContract.tableCols;
 
 public class PetsProvider extends ContentProvider
@@ -67,7 +68,22 @@ public class PetsProvider extends ContentProvider
     @Override
     public Uri insert(Uri uri, ContentValues contentValues)
     {
-        return null;
+        final int match = uri_matcher.match(uri);
+        switch (match)
+        {
+            case WHOLE_TABLE:
+                return insertPet(uri, contentValues);
+            default:
+                throw new IllegalArgumentException("Insertion not supported for" + uri);
+        }
+    }
+    private Uri insertPet(Uri uri, ContentValues contentValues)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long id = db.insert(tableCols.TABLE_NAME, null, contentValues);
+        if(id==-1)
+            return null;
+        return ContentUris.withAppendedId(uri, id);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.example.rakshit.pets;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.rakshit.pets.data.PetsContract.tableCols;
-import com.example.rakshit.pets.data.PetsDBHelper;
 
 public class AddActivity extends AppCompatActivity
 {
@@ -75,9 +74,6 @@ public class AddActivity extends AppCompatActivity
 
     private void insertPet()
     {
-        PetsDBHelper dbHelper = new PetsDBHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         String val_name = name.getText().toString().trim();
         String val_breed = breed.getText().toString().trim();
         int val_weight = Integer.valueOf(weight.getText().toString().trim());
@@ -88,7 +84,7 @@ public class AddActivity extends AppCompatActivity
         values.put(tableCols.COL_GENDER, gender);
         values.put(tableCols.COL_WEIGHT, val_weight);
 
-        long rowId = db.insert(tableCols.TABLE_NAME, null, values);
+        long rowId = ContentUris.parseId(getContentResolver().insert(tableCols.CONTENT_URI, values));
         if(rowId!=-1)
             Toast.makeText(this, "Added pet with row id "+rowId, Toast.LENGTH_SHORT).show();
         else

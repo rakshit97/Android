@@ -3,7 +3,7 @@ package com.example.rakshit.pets;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.rakshit.pets.data.PetsDBHelper;
 import com.example.rakshit.pets.data.PetsContract.tableCols;
 
 
@@ -78,8 +77,6 @@ public class MainActivity extends AppCompatActivity
 
     private void insertDummyData()
     {
-        PetsDBHelper dbHelper = new PetsDBHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(tableCols.COL_NAME, "toto");
@@ -87,8 +84,8 @@ public class MainActivity extends AppCompatActivity
         values.put(tableCols.COL_GENDER, tableCols.GENDER_MALE);
         values.put(tableCols.COL_WEIGHT, 10);
 
-        long rowId = db.insert(tableCols.TABLE_NAME, null, values);
-        if(rowId!=-1)
+        Uri uri = getContentResolver().insert(tableCols.CONTENT_URI, values);
+        if(uri!=null)
             displayDatabaseInfo();
         else
             Log.e("MainActivity", "Cannot insert data");
