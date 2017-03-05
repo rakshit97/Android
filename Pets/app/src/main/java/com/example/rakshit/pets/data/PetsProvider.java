@@ -104,6 +104,33 @@ public class PetsProvider extends ContentProvider
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings)
     {
-        return 0;
+        final int match = uri_matcher.match(uri);
+        switch(match)
+        {
+            case WHOLE_TABLE:
+                return updatePet(uri, contentValues, s, strings);
+            case SPECIFIC_COLUMN:
+                s = tableCols.COL_ID + "?=";
+                strings = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                return updatePet(uri, contentValues, s, strings);
+            default:
+                throw new IllegalArgumentException("Update not supported for "+uri);
+        }
+    }
+
+    private int updatePet(Uri uri, ContentValues contentValues, String s, String[] strings)
+    {
+        if(contentValues.size()==0)
+            return 0;
+        if(contentValues.containsKey(tableCols.COL_NAME))
+        {
+            String name = contentValues.getAsString(tableCols.COL_NAME);
+            if (name == null || name.isEmpty()) {
+                Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                return 0;
+            }
+        }
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        return db.update(tableCols.TABLE_NAME, contentValues, s, strings);
     }
 }
