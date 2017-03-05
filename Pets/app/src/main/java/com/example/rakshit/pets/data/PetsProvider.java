@@ -98,7 +98,23 @@ public class PetsProvider extends ContentProvider
     @Override
     public int delete(Uri uri, String s, String[] strings)
     {
-        return 0;
+        final int match = uri_matcher.match(uri);
+        switch(match)
+        {
+            case WHOLE_TABLE:
+                return deletePet(uri, s, strings);
+            case SPECIFIC_COLUMN:
+                s = tableCols.COL_ID + "?=";
+                strings = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                return deletePet(uri, s, strings);
+            default:
+                throw new IllegalArgumentException("Update not supported for "+uri);
+        }
+    }
+    private int deletePet(Uri uri, String s, String[] strings)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        return db.delete(tableCols.TABLE_NAME, s, strings);
     }
 
     @Override

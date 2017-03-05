@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rakshit.pets.data.PetsContract.tableCols;
 
@@ -91,6 +92,14 @@ public class MainActivity extends AppCompatActivity
             Log.e("MainActivity", "Cannot insert data");
     }
 
+    private void deleteAll()
+    {
+        int nums_deleted = getContentResolver().delete(tableCols.CONTENT_URI, null, null);
+        if(nums_deleted>0)
+            Toast.makeText(this, nums_deleted + " entries deleted", Toast.LENGTH_SHORT).show();
+        displayDatabaseInfo();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         switch(item.getItemId())
         {
             case R.id.options_add_dummy: insertDummyData();return true;
-            case R.id.options_del_all: return true;
+            case R.id.options_del_all: deleteAll();return true;
         }
         return super.onOptionsItemSelected(item);
     }
