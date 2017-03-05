@@ -62,7 +62,16 @@ public class PetsProvider extends ContentProvider
     @Override
     public String getType(Uri uri)
     {
-        return null;
+        final int match = uri_matcher.match(uri);
+        switch (match)
+        {
+            case WHOLE_TABLE:
+                return PetsContract.MIME_LIST;
+            case SPECIFIC_COLUMN:
+                return PetsContract.MIME_ITEM;
+            default:
+                throw new IllegalArgumentException("Invalid URI");
+        }
     }
 
     @Nullable
