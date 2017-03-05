@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.example.rakshit.pets.data.PetsContract.tableCols;
 
@@ -79,8 +80,16 @@ public class PetsProvider extends ContentProvider
     }
     private Uri insertPet(Uri uri, ContentValues contentValues)
     {
+        long id;
+        String name = contentValues.getAsString(tableCols.COL_NAME);
+        if(name == null || name.isEmpty())
+        {
+            Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+            id = -1;
+            return ContentUris.withAppendedId(uri, id);
+        }
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long id = db.insert(tableCols.TABLE_NAME, null, contentValues);
+        id = db.insert(tableCols.TABLE_NAME, null, contentValues);
         if(id==-1)
             return null;
         return ContentUris.withAppendedId(uri, id);
