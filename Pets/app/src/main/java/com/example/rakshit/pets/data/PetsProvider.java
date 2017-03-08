@@ -54,6 +54,7 @@ public class PetsProvider extends ContentProvider
             default:
                 throw new IllegalArgumentException("Cannot query invalid Uri " +uri);
         }
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
     }
@@ -101,6 +102,7 @@ public class PetsProvider extends ContentProvider
         id = db.insert(tableCols.TABLE_NAME, null, contentValues);
         if(id==-1)
             return null;
+        getContext().getContentResolver().notifyChange(uri, null);
         return ContentUris.withAppendedId(uri, id);
     }
 
@@ -123,6 +125,7 @@ public class PetsProvider extends ContentProvider
     private int deletePet(Uri uri, String s, String[] strings)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        getContext().getContentResolver().notifyChange(uri, null);
         return db.delete(tableCols.TABLE_NAME, s, strings);
     }
 
@@ -156,6 +159,7 @@ public class PetsProvider extends ContentProvider
             }
         }
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        getContext().getContentResolver().notifyChange(uri, null);
         return db.update(tableCols.TABLE_NAME, contentValues, s, strings);
     }
 }
