@@ -13,4 +13,6 @@
     <string name="gender_male">Male</string>
     <string name="gender_female">Female</string>
     <string name="weight">Weight</string>
+    <string name="empty_title">It\'s a bit lonely here…</string>
+    <string name="empty_text">Get started by adding a pet</string>
 </resources>

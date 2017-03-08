@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity
 
         Cursor cursor = getContentResolver().query(tableCols.CONTENT_URI, projection, null, null, null);
         ListView listView = (ListView) findViewById(R.id.pets_lv);
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
         DisplayAdapter displayAdapter = new DisplayAdapter(this, cursor);
         listView.setAdapter(displayAdapter);
     }
