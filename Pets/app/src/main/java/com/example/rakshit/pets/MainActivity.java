@@ -1,7 +1,10 @@
 package com.example.rakshit.pets;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,14 +20,25 @@ import android.widget.Toast;
 import com.example.rakshit.pets.data.PetsContract.tableCols;
 
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>
 {
+
+    DisplayAdapter displayAdapter;
+    static final String[] PROJECTION = new String[] {tableCols.COL_ID, tableCols.COL_NAME, tableCols.COL_BREED};
+    static final String SELECTION = "((" + tableCols.COL_NAME + " NOTNULL) AND (" + tableCols.COL_NAME + " != '' ))";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getLoaderManager().initLoader(0, null, this);
+
+        ListView listView = (ListView) findViewById(R.id.pets_lv);
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+        displayAdapter = new DisplayAdapter(this, null);
+        listView.setAdapter(displayAdapter);
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -38,25 +52,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        displayDatabaseInfo();
-    }
-
-    private void displayDatabaseInfo()
-    {
-        String[] projection = {tableCols.COL_ID, tableCols.COL_NAME, tableCols.COL_BREED, tableCols.COL_GENDER, tableCols.COL_WEIGHT};
-
-        Cursor cursor = getContentResolver().query(tableCols.CONTENT_URI, projection, null, null, null);
-        ListView listView = (ListView) findViewById(R.id.pets_lv);
-        View emptyView = findViewById(R.id.empty_view);
-        listView.setEmptyView(emptyView);
-        DisplayAdapter displayAdapter = new DisplayAdapter(this, cursor);
-        listView.setAdapter(displayAdapter);
-    }
-
     private void insertDummyData()
     {
         ContentValues values = new ContentValues();
@@ -67,9 +62,7 @@ public class MainActivity extends AppCompatActivity
         values.put(tableCols.COL_WEIGHT, 10);
 
         Uri uri = getContentResolver().insert(tableCols.CONTENT_URI, values);
-        if(uri!=null)
-            displayDatabaseInfo();
-        else
+        if(uri==null)
             Log.e("MainActivity", "Cannot insert data");
     }
 
@@ -78,7 +71,6 @@ public class MainActivity extends AppCompatActivity
         int nums_deleted = getContentResolver().delete(tableCols.CONTENT_URI, null, null);
         if(nums_deleted>0)
             Toast.makeText(this, nums_deleted + " entries deleted", Toast.LENGTH_SHORT).show();
-        displayDatabaseInfo();
     }
 
     @Override
@@ -97,5 +89,25 @@ public class MainActivity extends AppCompatActivity
             case R.id.options_del_all: deleteAll();return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //LoaderCallback Methods
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+    {
+        return new CursorLoader(this, tableCols.CONTENT_URI, PROJECTION, SELECTION, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
+    {
+        displayAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader)
+    {
+        displayAdapter.swapCursor(null);
     }
 }
