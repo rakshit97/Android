@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.rakshit.pets.data.PetsContract.tableCols;
@@ -50,30 +50,9 @@ public class MainActivity extends AppCompatActivity
         String[] projection = {tableCols.COL_ID, tableCols.COL_NAME, tableCols.COL_BREED, tableCols.COL_GENDER, tableCols.COL_WEIGHT};
 
         Cursor cursor = getContentResolver().query(tableCols.CONTENT_URI, projection, null, null, null);
-        try
-        {
-            TextView displayView = (TextView) findViewById(R.id.pet_tv);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount()+"\n");
-
-            while(cursor.moveToNext())
-            {
-                displayView.append("\n" + cursor.getInt(0) + " - " + cursor.getString(1) + " - "
-                        + cursor.getString(2) + " - ");
-                if(cursor.getInt(3)==0)
-                    displayView.append("Unknown Gender");
-                else if(cursor.getInt(3)==1)
-                    displayView.append("Male");
-                else
-                    displayView.append("Female");
-
-                displayView.append(" - " + cursor.getInt(4));
-            }
-
-        }
-        finally
-        {
-            cursor.close();
-        }
+        ListView listView = (ListView) findViewById(R.id.pets_lv);
+        DisplayAdapter displayAdapter = new DisplayAdapter(this, cursor);
+        listView.setAdapter(displayAdapter);
     }
 
     private void insertDummyData()
