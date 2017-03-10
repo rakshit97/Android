@@ -1,6 +1,7 @@
 package com.example.rakshit.pets;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,6 +41,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         listView.setEmptyView(emptyView);
         displayAdapter = new DisplayAdapter(this, null);
         listView.setAdapter(displayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id)
+            {
+                Uri uri = ContentUris.withAppendedId(tableCols.CONTENT_URI, id);
+                Intent edit = new Intent(MainActivity.this, AddActivity.class);
+                edit.setData(uri);
+                startActivity(edit);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()

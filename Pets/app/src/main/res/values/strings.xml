@@ -4,6 +4,7 @@
     <string name="del_all">Delete all records</string>
     <string name="del">Delete</string>
     <string name="add">Add a pet</string>
+    <string name="edit">Edit a pet</string>
     <string name="save">Save</string>
     <string name="overview">Overview</string>
     <string name="name">Name</string>

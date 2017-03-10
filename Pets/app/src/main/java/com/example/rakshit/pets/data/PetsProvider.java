@@ -115,7 +115,7 @@ public class PetsProvider extends ContentProvider
             case WHOLE_TABLE:
                 return deletePet(uri, s, strings);
             case SPECIFIC_COLUMN:
-                s = tableCols.COL_ID + "?=";
+                s = tableCols.COL_ID + "=?";
                 strings = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 return deletePet(uri, s, strings);
             default:
@@ -138,7 +138,7 @@ public class PetsProvider extends ContentProvider
             case WHOLE_TABLE:
                 return updatePet(uri, contentValues, s, strings);
             case SPECIFIC_COLUMN:
-                s = tableCols.COL_ID + "?=";
+                s = tableCols.COL_ID + "=?";
                 strings = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 return updatePet(uri, contentValues, s, strings);
             default:
