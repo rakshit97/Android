@@ -1,19 +1,23 @@
 package com.example.rakshit.pets;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,10 +37,42 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
     private EditText weight;
     Uri uri;
 
+    private int prev_gender=0, prev_weight =0;
+    private String prev_name = "", prev_breed = "";
+    private boolean hasChanged;
+
     static final String[] PROJECTION = new String[] {tableCols.COL_ID, tableCols.COL_NAME, tableCols.COL_BREED, tableCols.COL_GENDER, tableCols.COL_WEIGHT};
     static final String SELECTION = "((" + tableCols.COL_NAME + " NOTNULL) AND (" + tableCols.COL_NAME + " != '' ))";
 
-    @Override
+    private View.OnTouchListener touchListener = new View.OnTouchListener()
+    {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent)
+        {
+            checkForChange();
+            return false;
+        }
+    };
+
+    private void checkForChange()
+    {
+        String val_name = name.getText().toString().trim();
+        String val_breed = breed.getText().toString().trim();
+        int val_weight;
+        try
+        {
+            val_weight = Integer.valueOf(weight.getText().toString().trim());
+        }
+        catch (NumberFormatException e)
+        {
+            val_weight = 0;
+        }
+
+        if(!val_name.equals(prev_name) || !val_breed.equals(prev_breed) || gender!=prev_gender || val_weight!=prev_weight)
+            hasChanged = true;
+    }
+
+    @Nullable
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -44,6 +80,7 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
 
         Intent edit = getIntent();
         uri = edit.getData();
+        hasChanged = false;
 
         if(uri==null)
             setTitle(getString(R.string.add));
@@ -57,7 +94,12 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         breed = (EditText)findViewById(R.id.breed);
         weight = (EditText)findViewById(R.id.weight);
 
+        name.setOnTouchListener(touchListener);
+        breed.setOnTouchListener(touchListener);
+        weight.setOnTouchListener(touchListener);
+
         genderSpinner = (Spinner)findViewById(R.id.spinner);
+        genderSpinner.setOnTouchListener(touchListener);
         setupSpinner();
     }
 
@@ -108,6 +150,8 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         }
 
         ContentValues values = new ContentValues();
+        if(!val_name.equals(prev_name) || !val_breed.equals(prev_breed) || gender!=prev_gender || val_weight!=prev_weight)
+            hasChanged = true;
         values.put(tableCols.COL_NAME, val_name);
         values.put(tableCols.COL_BREED, val_breed);
         values.put(tableCols.COL_GENDER, gender);
@@ -159,10 +203,65 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                 clearData();
                 return true;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                checkForChange();
+                if(!hasChanged)
+                {
+                    NavUtils.navigateUpFromSameTask(this);
+                    return true;
+                }
+
+                DialogInterface.OnClickListener discardButtonListener = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        NavUtils.navigateUpFromSameTask(AddActivity.this);
+                    }
+                };
+                showDialog(discardButtonListener);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        checkForChange();
+        if(!hasChanged)
+        {
+            super.onBackPressed();
+            return;
+        }
+        DialogInterface.OnClickListener discardButtonListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                finish();
+            }
+        };
+        showDialog(discardButtonListener);
+    }
+
+    //create dialog box
+    private void showDialog(DialogInterface.OnClickListener discardButtonListener)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.message);
+        builder.setPositiveButton(R.string.positive, discardButtonListener);
+        builder.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                if(dialogInterface!=null)
+                    dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     //Loader Callbacks
@@ -177,10 +276,14 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
         data.moveToFirst();
-        name.setText(data.getString(data.getColumnIndexOrThrow(tableCols.COL_NAME)));
-        breed.setText(data.getString(data.getColumnIndexOrThrow(tableCols.COL_BREED)));
-        weight.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(tableCols.COL_WEIGHT))));
-        genderSpinner.setSelection(data.getInt(data.getColumnIndexOrThrow(tableCols.COL_GENDER)));
+        prev_name = data.getString(data.getColumnIndexOrThrow(tableCols.COL_NAME));
+        name.setText(prev_name);
+        prev_breed = data.getString(data.getColumnIndexOrThrow(tableCols.COL_BREED));
+        breed.setText(prev_breed);
+        prev_weight = data.getInt(data.getColumnIndexOrThrow(tableCols.COL_WEIGHT));
+        weight.setText(String.valueOf(prev_weight));
+        prev_gender = data.getInt(data.getColumnIndexOrThrow(tableCols.COL_GENDER));
+        genderSpinner.setSelection(prev_gender);
     }
 
     @Override
