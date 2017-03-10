@@ -162,17 +162,17 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         {
             long rowId = ContentUris.parseId(getContentResolver().insert(tableCols.CONTENT_URI, values));
             if(rowId!=-1)
-                Toast.makeText(this, "Added pet with row id "+rowId, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Successfully added a pet :)", Toast.LENGTH_SHORT).show();
             else
-                Toast.makeText(this, "Error adding pet" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error adding pet :(" , Toast.LENGTH_SHORT).show();
         }
         if(uri!=null && hasChanged)
         {
             long updtd = getContentResolver().update(uri, values, null, null);
             if(updtd!=0)
-                Toast.makeText(this, "Updated pet with row id "+ContentUris.parseId(uri), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Successfully updated the pet :) ", Toast.LENGTH_SHORT).show();
             else
-                Toast.makeText(this, "Error updating pet" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error updating pet :(" , Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -211,7 +211,7 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                             long dltd = getContentResolver().delete(uri, null, null);
                             if(dltd!=0)
                             {
-                                Toast.makeText(AddActivity.this, "Deleted record(s)", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddActivity.this, "Deleted record", Toast.LENGTH_SHORT).show();
                             }
                             else
                                 Toast.makeText(AddActivity.this, "Error deleting", Toast.LENGTH_SHORT).show();

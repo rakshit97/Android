@@ -1,9 +1,11 @@
 package com.example.rakshit.pets;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -82,9 +84,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void deleteAll()
     {
-        int nums_deleted = getContentResolver().delete(tableCols.CONTENT_URI, null, null);
-        if(nums_deleted>0)
-            Toast.makeText(this, nums_deleted + " entries deleted", Toast.LENGTH_SHORT).show();
+        DialogInterface.OnClickListener deleteButtonListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                int dltd = getContentResolver().delete(tableCols.CONTENT_URI, null, null);
+                if(dltd!=0)
+                {
+                    Toast.makeText(MainActivity.this, "Deleted all records", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(MainActivity.this, "Error deleting records", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        showDeleteDialog(deleteButtonListener);
     }
 
     @Override
@@ -103,6 +118,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.options_del_all: deleteAll();return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //dialog
+    private void showDeleteDialog(DialogInterface.OnClickListener deleteButtonListener)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.deletemessage);
+        builder.setPositiveButton(R.string.yes, deleteButtonListener);
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                if(dialogInterface!=null)
+                    dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     //LoaderCallback Methods
