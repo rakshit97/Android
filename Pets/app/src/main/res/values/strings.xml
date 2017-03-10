@@ -16,7 +16,10 @@
     <string name="weight">Weight</string>
     <string name="empty_title">It\'s a bit lonely here…</string>
     <string name="empty_text">Get started by adding a pet</string>
-    <string name="message">Discard changes and go back?</string>
+    <string name="discardmessage">Discard changes and go back?</string>
+    <string name="deletemessage">Delete record(s)?</string>
     <string name="positive">Discard</string>
     <string name="negative">Keep Editing</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

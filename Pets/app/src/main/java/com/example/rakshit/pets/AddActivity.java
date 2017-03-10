@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -165,7 +166,7 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
             else
                 Toast.makeText(this, "Error adding pet" , Toast.LENGTH_SHORT).show();
         }
-        else
+        if(uri!=null && hasChanged)
         {
             long updtd = getContentResolver().update(uri, values, null, null);
             if(updtd!=0)
@@ -200,6 +201,27 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                 finish();
                 return true;
             case R.id.option_del:
+                if(uri!=null)
+                {
+                    DialogInterface.OnClickListener deleteButtonListener = new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                            long dltd = getContentResolver().delete(uri, null, null);
+                            if(dltd!=0)
+                            {
+                                Toast.makeText(AddActivity.this, "Deleted record(s)", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(AddActivity.this, "Error deleting", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    };
+
+                    showDeleteDialog(deleteButtonListener);
+                    return true;
+                }
                 clearData();
                 return true;
             case android.R.id.home:
@@ -218,7 +240,7 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                         NavUtils.navigateUpFromSameTask(AddActivity.this);
                     }
                 };
-                showDialog(discardButtonListener);
+                showDiscardDialog(discardButtonListener);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -241,16 +263,35 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                 finish();
             }
         };
-        showDialog(discardButtonListener);
+        showDiscardDialog(discardButtonListener);
     }
 
     //create dialog box
-    private void showDialog(DialogInterface.OnClickListener discardButtonListener)
+    private void showDiscardDialog(DialogInterface.OnClickListener discardButtonListener)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.message);
+        builder.setMessage(R.string.discardmessage);
         builder.setPositiveButton(R.string.positive, discardButtonListener);
         builder.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                if(dialogInterface!=null)
+                    dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void showDeleteDialog(DialogInterface.OnClickListener deleteButtonListener)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.deletemessage);
+        builder.setPositiveButton(R.string.yes, deleteButtonListener);
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
@@ -276,14 +317,20 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
         data.moveToFirst();
-        prev_name = data.getString(data.getColumnIndexOrThrow(tableCols.COL_NAME));
-        name.setText(prev_name);
-        prev_breed = data.getString(data.getColumnIndexOrThrow(tableCols.COL_BREED));
-        breed.setText(prev_breed);
-        prev_weight = data.getInt(data.getColumnIndexOrThrow(tableCols.COL_WEIGHT));
-        weight.setText(String.valueOf(prev_weight));
-        prev_gender = data.getInt(data.getColumnIndexOrThrow(tableCols.COL_GENDER));
-        genderSpinner.setSelection(prev_gender);
+        try {
+            prev_name = data.getString(data.getColumnIndexOrThrow(tableCols.COL_NAME));
+            name.setText(prev_name);
+            prev_breed = data.getString(data.getColumnIndexOrThrow(tableCols.COL_BREED));
+            breed.setText(prev_breed);
+            prev_weight = data.getInt(data.getColumnIndexOrThrow(tableCols.COL_WEIGHT));
+            weight.setText(String.valueOf(prev_weight));
+            prev_gender = data.getInt(data.getColumnIndexOrThrow(tableCols.COL_GENDER));
+            genderSpinner.setSelection(prev_gender);
+        }
+        catch(CursorIndexOutOfBoundsException e)
+        {
+            return;
+        }
     }
 
     @Override
