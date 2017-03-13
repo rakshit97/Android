@@ -55,19 +55,19 @@ public class MainActivity extends AppCompatActivity
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
         {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            ArrayList<String> fake_data = new ArrayList<String>(10);
-            fake_data.add("Today-Sunny-36/23");
-            fake_data.add("Today-Sunny-36/23");
-            fake_data.add("Today-Rainy-36/23");
-            fake_data.add("Today-Sunny-36/23");
-            fake_data.add("Today-Stormy-36/23");
-            fake_data.add("Today-Sunny-36/23");
-            fake_data.add("Today-Snow-36/23");
-            fake_data.add("Today-Sunny-36/23");
-            fake_data.add("Today-Cloudy-36/23");
-            fake_data.add("Today-Sunny-36/23");
+            ArrayList<String> fakeData = new ArrayList<String>(10);
+            fakeData.add("Today-Sunny-36/23");
+            fakeData.add("Today-Sunny-36/23");
+            fakeData.add("Today-Rainy-36/23");
+            fakeData.add("Today-Sunny-36/23");
+            fakeData.add("Today-Stormy-36/23");
+            fakeData.add("Today-Sunny-36/23");
+            fakeData.add("Today-Snow-36/23");
+            fakeData.add("Today-Sunny-36/23");
+            fakeData.add("Today-Cloudy-36/23");
+            fakeData.add("Today-Sunny-36/23");
 
-            ArrayAdapter<String> forecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_forecast, R.id.tv_forecast, fake_data);
+            ArrayAdapter<String> forecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_forecast, R.id.tv_forecast, fakeData);
             ListView forecastList = (ListView)rootView.findViewById(R.id.lv_forecast);
             forecastList.setAdapter(forecastAdapter);
 
