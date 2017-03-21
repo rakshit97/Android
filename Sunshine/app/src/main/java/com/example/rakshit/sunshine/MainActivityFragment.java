@@ -1,16 +1,18 @@
 package com.example.rakshit.sunshine;
 
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.app.LoaderManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -44,6 +46,16 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         adapter = new ForecastAdapter(getActivity(), new ArrayList<ForecastData>());
         ListView forecastList = (ListView)rootView.findViewById(R.id.lv_forecast);
         forecastList.setAdapter(adapter);
+
+        forecastList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Intent intent = new Intent(getContext(), DetailActivity.class).putExtra("data", adapter.getItem(i));
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
