@@ -1,14 +1,15 @@
 package com.example.rakshit.sunshine;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity
 {
@@ -51,7 +52,12 @@ public class DetailActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
         {
-            return inflater.inflate(R.layout.fragment_detail, container);
+            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+            TextView tv_details = (TextView)rootView.findViewById(R.id.tv_details);
+
+            ForecastData data = getActivity().getIntent().getParcelableExtra("data");
+            tv_details.setText(String.valueOf(data.getTemp_max()) + "/" + String.valueOf(data.getTemp_min())+ " - " + data.getCondition());
+            return rootView;
         }
     }
 }
