@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/label_prefs">
+
+    <EditTextPreference
+        android:title="@string/label_location_pref"
+        android:inputType="textCapWords"
+        android:selectAllOnFocus="true"
+        android:defaultValue="@string/location_default_value"
+        android:key="@string/location_key"/>
+
+</PreferenceScreen>

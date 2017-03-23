@@ -1,5 +1,6 @@
 package com.example.rakshit.sunshine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -31,7 +32,10 @@ public class MainActivity extends AppCompatActivity
     {
         int id = item.getItemId();
         if(id == R.id.menu_settings)
-            return true;
+        {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
+        }
         return super.onOptionsItemSelected(item);
     }
 }

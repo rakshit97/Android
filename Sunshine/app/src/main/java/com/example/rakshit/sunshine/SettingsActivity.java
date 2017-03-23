@@ -13,6 +13,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.location_key)));
     }
 
     private void bindPreferenceSummaryToValue(Preference preference)

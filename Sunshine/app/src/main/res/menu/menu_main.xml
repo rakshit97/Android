@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/menu_settings"
-        android:title="@string/settings_title"
+        android:title="@string/label_settings"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
