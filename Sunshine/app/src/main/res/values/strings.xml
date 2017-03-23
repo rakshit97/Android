@@ -4,10 +4,22 @@
     <string name="label_details">Details</string>
     <string name="label_prefs">Preferences</string>
     <string name="label_location_pref">Location</string>
+    <string name="label_units_pref">Measurement Unit</string>
 
     <!-- Preferences keys and values -->
-
     <!-- Location -->
     <string name="location_default_value" translatable="false">Manipal</string>
     <string name="location_key" translatable="false">location</string>
+    
+    <!-- Units -->
+    <string name="units_default_value" translatable="false">metric</string>
+    <string name="units_key" translatable="false">units</string>
+    
+        <!-- Celsius -->
+        <string name="units_celsius_label">Celsius</string>
+        <string name="units_celsius_value" translatable="false">metric</string>
+
+        <!-- Fahrenheit -->
+        <string name="units_fahrenheit_label">Fahrenheit</string>
+        <string name="units_fahrenheit_value" translatable="false">imperial</string>
 </resources>

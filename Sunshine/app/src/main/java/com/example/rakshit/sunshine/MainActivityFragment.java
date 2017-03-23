@@ -4,9 +4,12 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,7 +24,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 {
     ForecastAdapter adapter;
     private static final String WEATHER_REQUEST_URL =
-            "http://api.openweathermap.org/data/2.5/forecast/daily?q=Manipal&units=metric&appid="+BuildConfig.API_KEY;
+            "http://api.openweathermap.org/data/2.5/forecast/daily?";
     private static final int WEATHER_LOADER_ID = 1;
 
     public MainActivityFragment()
@@ -64,7 +67,17 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public Loader<ArrayList<ForecastData>> onCreateLoader(int i, Bundle bundle)
     {
-        return new DataLoader(getActivity(), WEATHER_REQUEST_URL);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = preferences.getString(getString(R.string.location_key), getString(R.string.location_default_value));
+        String unit = preferences.getString(getString(R.string.units_key), getString(R.string.units_default_value));
+
+        Uri baseUri = Uri.parse(WEATHER_REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("q", location);
+        uriBuilder.appendQueryParameter("units", unit);
+        uriBuilder.appendQueryParameter("appid", BuildConfig.API_KEY);
+
+        return new DataLoader(getActivity(), uriBuilder.toString());
     }
 
     @Override

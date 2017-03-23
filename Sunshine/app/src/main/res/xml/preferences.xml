@@ -10,4 +10,11 @@
         android:defaultValue="@string/location_default_value"
         android:key="@string/location_key"/>
 
+    <ListPreference
+        android:title="@string/label_units_pref"
+        android:entries="@array/units_labels"
+        android:entryValues="@array/units_values"
+        android:key="@string/units_key"
+        android:defaultValue="@string/units_default_value"/>
+
 </PreferenceScreen>
