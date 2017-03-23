@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -63,5 +64,11 @@ public class DetailActivity extends AppCompatActivity
             tv_details.setText(String.valueOf(data.getTemp_max()) + "/" + String.valueOf(data.getTemp_min())+ " - " + data.getCondition());
             return rootView;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

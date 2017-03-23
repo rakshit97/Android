@@ -7,7 +7,13 @@
     <item
         android:id="@+id/menu_settings"
         android:title="@string/label_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_map"
+        android:title="@string/map"
+        android:orderInCategory="1"
         app:showAsAction="never"/>
 
 </menu>

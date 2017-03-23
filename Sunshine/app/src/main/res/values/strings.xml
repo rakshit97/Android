@@ -5,6 +5,7 @@
     <string name="label_prefs">Preferences</string>
     <string name="label_location_pref">Location</string>
     <string name="label_units_pref">Measurement Unit</string>
+    <string name="map">"Show in Map</string>
 
     <!-- Preferences keys and values -->
     <!-- Location -->
