@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Sunshine</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="settings_title">Settings</string>
     <string name="detail_label">Details</string>
+
+    <!-- Preferences keys and values -->
 </resources>
