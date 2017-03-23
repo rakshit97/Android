@@ -10,4 +10,10 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/menu_share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+
 </menu>
