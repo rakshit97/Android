@@ -44,7 +44,7 @@ public class DetailActivity extends AppCompatActivity
     {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, dataString+"#Sunshine App");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, dataString+" #Sunshine App");
         return shareIntent;
     }
 
