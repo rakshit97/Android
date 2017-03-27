@@ -19,9 +19,9 @@ public class WeatherContract
 
         public static final String COLUMN_LOC_KEY = "location_id";
         public static final String COLUMN_DATE = "date";
-        public static final String COLUMN_WEATHER_ID = "weather_id";
         public static final String COLUMN_MAX_TEMP = "max";
         public static final String COLUMN_MIN_TEMP = "min";
+        public static final String COLUMN_WEATHER_ID = "weather_id";
         public static final String COLUMN_SHORT_DESC = "short_desc";
         public static final String COLUMN_HUMIDITY = "humidity";
         public static final String COLUMN_PRESSURE = "pressure";
@@ -32,5 +32,10 @@ public class WeatherContract
     public static final class LocationEntries implements BaseColumns
     {
         public static final String TABLE_NAME = "location";
+
+        public static final String COLUMN_CITY = "city";
+        public static final String COLUMN_LATITUDE = "lat";
+        public static final String COLUMN_LONGITUDE = "long";
+        public static final String COLUMN_LOCATION = "loc_settings";
     }
 }

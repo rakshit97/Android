@@ -1,4 +1,4 @@
-package com.example.rakshit.sunshine;
+package com.example.rakshit.sunshine.data;
 
 
 import android.test.suitebuilder.TestSuiteBuilder;
