@@ -15,13 +15,21 @@ import com.example.rakshit.sunshine.data.WeatherContract.WeatherEntries;
 
 public class WeatherProvider extends ContentProvider
 {
-    private static final UriMatcher uriMatcher = buildUriMatcher();
+    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private WeatherDbHelper dbHelper;
 
     static final int WEATHER = 100;
     static final int WEATHER_WITH_LOCATION = 101;
     static final int WEATHER_WITH_LOCATION_AND_DATE = 102;
     static final int LOCATION = 200;
+
+    static
+    {
+        uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER, WEATHER);
+        uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER + "/*", WEATHER_WITH_LOCATION);
+        uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER + "/*/#", WEATHER_WITH_LOCATION_AND_DATE);
+        uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_LOCATION, LOCATION);
+    }
 
     private static final SQLiteQueryBuilder builder;
 
@@ -79,12 +87,6 @@ public class WeatherProvider extends ContentProvider
         return builder.query(dbHelper.getReadableDatabase(), projection, selection, selectionArgs, null, null, sortOrder);
     }
 
-    static UriMatcher buildUriMatcher()
-    {
-        return null;
-    }
-
-
     @Override
     public boolean onCreate()
     {
@@ -127,10 +129,10 @@ public class WeatherProvider extends ContentProvider
                 cursor = getWeatherByLocation(uri, strings, s1);
                 break;
             case WEATHER:
-                cursor = null;
+                cursor = dbHelper.getReadableDatabase().query(WeatherEntries.TABLE_NAME, strings, s, strings1, null, null, s1);
                 break;
             case LOCATION:
-                cursor = null;
+                cursor = dbHelper.getReadableDatabase().query(LocationEntries.TABLE_NAME, strings, s, strings1, null, null, s1);;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid uri");
@@ -150,17 +152,29 @@ public class WeatherProvider extends ContentProvider
         switch (match)
         {
             case WEATHER:
+            {
                 normalizeDate(contentValues);
                 long id = database.insert(WeatherEntries.TABLE_NAME, null, contentValues);
-                if (id>0)
+                if (id > 0)
                     retUri = WeatherEntries.buildUriWithId(id);
                 else
                     throw new SQLException("Cannot insert data");
                 break;
+            }
+            case LOCATION:
+            {
+                long id = database.insert(LocationEntries.TABLE_NAME, null, contentValues);
+                if (id > 0)
+                    retUri = LocationEntries.buildLocationUri(id);
+                else
+                    throw new SQLException("Cannot insert data");
+                break;
+            }
             default:
                 throw new IllegalArgumentException("Invalid Uri");
         }
         getContext().getContentResolver().notifyChange(uri, null);
+        database.close();
         return retUri;
     }
 
@@ -174,13 +188,64 @@ public class WeatherProvider extends ContentProvider
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String s, String[] strings)
+    {
+        int match = uriMatcher.match(uri);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int updtd;
+
+        switch (match)
+        {
+            case WEATHER:
+            {
+                normalizeDate(contentValues);
+                updtd = db.update(WeatherEntries.TABLE_NAME, contentValues, s, strings);
+                if (updtd<=0)
+                    throw new SQLException("Can't update");
+                break;
+            }
+            case LOCATION:
+            {
+                updtd = db.update(LocationEntries.TABLE_NAME, contentValues, s, strings);
+                if (updtd<=0)
+                    throw new SQLException("Can't update");
+                break;
+            }
+            default:
+                throw new IllegalArgumentException("Invalid Uri");
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return updtd;
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+    public int delete(Uri uri, String s, String[] strings)
+    {
+        int match = uriMatcher.match(uri);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int dltd;
+
+        switch (match)
+        {
+            case WEATHER:
+            {
+                dltd = db.delete(WeatherEntries.TABLE_NAME, s, strings);
+                if (dltd<=0)
+                    throw new SQLException("Can't delete");
+                break;
+            }
+            case LOCATION:
+            {
+                dltd = db.delete(LocationEntries.TABLE_NAME, s, strings);
+                if (dltd<=0)
+                    throw new SQLException("Can't delete");
+                break;
+            }
+            default:
+                throw new IllegalArgumentException("Invalid Uri");
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return dltd;
     }
 
     @Override
