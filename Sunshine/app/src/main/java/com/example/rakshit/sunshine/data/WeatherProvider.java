@@ -36,7 +36,6 @@ public class WeatherProvider extends ContentProvider
     static
     {
         builder = new SQLiteQueryBuilder();
-
         //inner join
         builder.setTables(WeatherEntries.TABLE_NAME + " INNER JOIN "
             + LocationEntries.TABLE_NAME + " ON "
@@ -45,17 +44,17 @@ public class WeatherProvider extends ContentProvider
             + LocationEntries._ID);
     }
 
-    //location.location = ?
+    //location.city = ?
     public static final String locationSelection = LocationEntries.TABLE_NAME + "."
-            + LocationEntries.COLUMN_LOCATION + "=?";
+            + LocationEntries.COLUMN_CITY + "=?";
 
-    //location.location = ? AND date >= ?
+    //location.city = ? AND date >= ?
     public static final String locationWithStartDateSelection = LocationEntries.TABLE_NAME + "."
-             + LocationEntries.COLUMN_LOCATION + "=? AND " + WeatherEntries.COLUMN_DATE + ">=?";
+             + LocationEntries.COLUMN_CITY + "=? AND " + WeatherEntries.COLUMN_DATE + ">=?";
 
-    //location.location = ? AND date = ?
+    //location.city = ? AND date = ?
     public static final String locationWithDateSelection = LocationEntries.TABLE_NAME + "."
-            + LocationEntries.COLUMN_LOCATION + "=? AND " + WeatherEntries.COLUMN_DATE + "=?";
+            + LocationEntries.COLUMN_CITY + "=? AND " + WeatherEntries.COLUMN_DATE + "=?";
 
     private Cursor getWeatherByLocation(Uri uri,String[] projection, String sortOrder)
     {
@@ -230,15 +229,11 @@ public class WeatherProvider extends ContentProvider
             case WEATHER:
             {
                 dltd = db.delete(WeatherEntries.TABLE_NAME, s, strings);
-                if (dltd<=0)
-                    throw new SQLException("Can't delete");
                 break;
             }
             case LOCATION:
             {
                 dltd = db.delete(LocationEntries.TABLE_NAME, s, strings);
-                if (dltd<=0)
-                    throw new SQLException("Can't delete");
                 break;
             }
             default:
@@ -257,15 +252,18 @@ public class WeatherProvider extends ContentProvider
             case WEATHER:
                 db.beginTransaction();
                 int count = 0;
-                try {
-                    for (ContentValues value : values) {
+                try
+                {
+                    for (ContentValues value : values)
+                    {
                         normalizeDate(value);
                         long id = db.insert(WeatherEntries.TABLE_NAME, null, value);
                         if (id != -1)
                             count++;
                     }
                     db.setTransactionSuccessful();
-                } finally {
+                } finally
+                {
                     db.endTransaction();
                 }
                 getContext().getContentResolver().notifyChange(uri, null);

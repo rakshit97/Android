@@ -34,6 +34,7 @@ public class WeatherContract
         public static final String COLUMN_MIN_TEMP = "min";
         public static final String COLUMN_WEATHER_ID = "weather_id";
         public static final String COLUMN_SHORT_DESC = "short_desc";
+        public static final String COLUMN_LONG_DESC = "long_desc";
         public static final String COLUMN_HUMIDITY = "humidity";
         public static final String COLUMN_PRESSURE = "pressure";
         public static final String COLUMN_WIND_SPEED = "wind";
@@ -87,7 +88,6 @@ public class WeatherContract
         public static final String COLUMN_CITY = "city";
         public static final String COLUMN_LATITUDE = "lat";
         public static final String COLUMN_LONGITUDE = "long";
-        public static final String COLUMN_LOCATION = "loc_settings";
 
         public static Uri buildLocationUri(long id)
         {

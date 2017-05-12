@@ -21,31 +21,29 @@ public class WeatherDbHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
         final String CREATE_WEATHER_TABLE = "CREATE TABLE " + WeatherEntries.TABLE_NAME
-                + " (" + WeatherEntries._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + " (" + WeatherEntries._ID + " INTEGER PRIMARY KEY, "
                 + WeatherEntries.COLUMN_LOC_KEY + " INTEGER NOT NULL, "
                 + WeatherEntries.COLUMN_DATE + " INTEGER NOT NULL, "
                 + WeatherEntries.COLUMN_MAX_TEMP + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_MIN_TEMP + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_WEATHER_ID + " INTEGER NOT NULL, "
                 + WeatherEntries.COLUMN_SHORT_DESC + " TEXT NOT NULL, "
+                + WeatherEntries.COLUMN_LONG_DESC + " TEXT NOT NULL, "
                 + WeatherEntries.COLUMN_HUMIDITY + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_PRESSURE + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_WIND_SPEED + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_WIND_DIRECTION + " REAL NOT NULL, "
                 + "FOREIGN KEY (" + WeatherEntries.COLUMN_LOC_KEY + ") REFERENCES "
-                + LocationEntries.TABLE_NAME + " (" + LocationEntries._ID + "), "
-                + "UNIQUE (" + WeatherEntries.COLUMN_DATE + ", "
-                + WeatherEntries.COLUMN_LOC_KEY + ") ON CONFLICT REPLACE);";
+                + LocationEntries.TABLE_NAME + " (" + LocationEntries._ID + "));";
 
         final String CREATE_LOCATION_TABLE = "CREATE TABLE " + LocationEntries.TABLE_NAME
-                +" (" + LocationEntries._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + LocationEntries.COLUMN_LOCATION + " TEXT UNIQUE NOT NULL, "
+                +" (" + LocationEntries._ID + " INTEGER PRIMARY KEY, "
                 + LocationEntries.COLUMN_CITY + " TEXT NOT NULL, "
                 + LocationEntries.COLUMN_LATITUDE + " REAL NOT NULL, "
                 + LocationEntries.COLUMN_LONGITUDE + " REAL NOT NULL);";
 
-        sqLiteDatabase.execSQL(CREATE_WEATHER_TABLE);
         sqLiteDatabase.execSQL(CREATE_LOCATION_TABLE);
+        sqLiteDatabase.execSQL(CREATE_WEATHER_TABLE);
     }
 
     @Override

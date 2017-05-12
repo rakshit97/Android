@@ -1,34 +1,35 @@
 package com.example.rakshit.sunshine;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
+import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.rakshit.sunshine.data.WeatherContract.WeatherEntries;
 
-public class ForecastAdapter extends ArrayAdapter<ForecastData>
+public class ForecastAdapter extends CursorAdapter
 {
-    public ForecastAdapter(Activity context, ArrayList<ForecastData> datas)
+    public ForecastAdapter(Context context, Cursor cursor)
     {
-        super(context, 0, datas);
+        super(context, cursor, 0);
     }
 
-    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View newView(Context context, Cursor cursor, ViewGroup viewGroup)
     {
-        if(convertView==null)
-        {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_forecast, parent, false);
-        }
+        return LayoutInflater.from(context).inflate(R.layout.list_forecast, viewGroup, false);
+    }
 
-        ForecastData curr = getItem(position);
-        TextView tv_forecast = (TextView)convertView.findViewById(R.id.tv_forecast);
-        tv_forecast.setText(String.valueOf(curr.getTemp_max()) + "/" + String.valueOf(curr.getTemp_min())+ " - " + curr.getCondition());
-        return convertView;
+    @Override
+    public void bindView(View view, Context context, Cursor cursor)
+    {
+        TextView forecast = (TextView) view.findViewById(R.id.tv_forecast);
+        String max = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(WeatherEntries.COLUMN_MAX_TEMP)));
+        String min = String.valueOf(cursor.getDouble(cursor.getColumnIndexOrThrow(WeatherEntries.COLUMN_MIN_TEMP)));
+        String desc = cursor.getString(cursor.getColumnIndexOrThrow(WeatherEntries.COLUMN_LONG_DESC));
+        forecast.setText(max+"/"+min+" - "+desc);
     }
 }
