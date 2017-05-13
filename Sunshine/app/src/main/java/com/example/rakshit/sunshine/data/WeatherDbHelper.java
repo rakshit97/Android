@@ -23,7 +23,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper
         final String CREATE_WEATHER_TABLE = "CREATE TABLE " + WeatherEntries.TABLE_NAME
                 + " (" + WeatherEntries._ID + " INTEGER PRIMARY KEY, "
                 + WeatherEntries.COLUMN_LOC_KEY + " INTEGER NOT NULL, "
-                + WeatherEntries.COLUMN_DATE + " INTEGER NOT NULL, "
+                + WeatherEntries.COLUMN_DATE + " BIGINT NOT NULL, "
                 + WeatherEntries.COLUMN_MAX_TEMP + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_MIN_TEMP + " REAL NOT NULL, "
                 + WeatherEntries.COLUMN_WEATHER_ID + " INTEGER NOT NULL, "

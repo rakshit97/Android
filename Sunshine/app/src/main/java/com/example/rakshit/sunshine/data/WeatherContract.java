@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.text.format.Time;
 
 public class WeatherContract
 {
@@ -12,14 +11,6 @@ public class WeatherContract
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_WEATHER = WeatherEntries.TABLE_NAME;
     public static final String PATH_LOCATION = LocationEntries.TABLE_NAME;
-
-    public static long normalizeDate(long startDate)
-    {
-        Time time = new Time();
-        time.set(startDate);
-        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
-        return time.setJulianDay(julianDay);
-    }
 
     public static final class WeatherEntries implements BaseColumns
     {
@@ -52,12 +43,12 @@ public class WeatherContract
 
         public static Uri buildUriWithLocationAndStartDate(String location, long startDate)
         {
-            return CONTENT_URI.buildUpon().appendPath(location).appendQueryParameter(COLUMN_DATE, Long.toString(normalizeDate(startDate))).build();
+            return CONTENT_URI.buildUpon().appendPath(location).appendQueryParameter(COLUMN_DATE, Long.toString(startDate)).build();
         }
 
         public static Uri buildUriWithLocationAndDate(String location, long date)
         {
-            return CONTENT_URI.buildUpon().appendPath(location).appendPath(Long.toString(normalizeDate(date))).build();
+            return CONTENT_URI.buildUpon().appendPath(location).appendPath(Long.toString(date)).build();
         }
 
         public static String getLocationFromUri(Uri uri)

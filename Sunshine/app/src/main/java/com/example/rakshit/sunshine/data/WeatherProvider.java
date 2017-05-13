@@ -152,7 +152,6 @@ public class WeatherProvider extends ContentProvider
         {
             case WEATHER:
             {
-                normalizeDate(contentValues);
                 long id = database.insert(WeatherEntries.TABLE_NAME, null, contentValues);
                 if (id > 0)
                     retUri = WeatherEntries.buildUriWithId(id);
@@ -177,15 +176,6 @@ public class WeatherProvider extends ContentProvider
         return retUri;
     }
 
-    private void normalizeDate(ContentValues values)
-    {
-        if (values.containsKey(WeatherEntries.COLUMN_DATE))
-        {
-            long date = values.getAsLong(WeatherEntries.COLUMN_DATE);
-            values.put(WeatherEntries.COLUMN_DATE, WeatherContract.normalizeDate(date));
-        }
-    }
-
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings)
     {
@@ -197,7 +187,6 @@ public class WeatherProvider extends ContentProvider
         {
             case WEATHER:
             {
-                normalizeDate(contentValues);
                 updtd = db.update(WeatherEntries.TABLE_NAME, contentValues, s, strings);
                 if (updtd<=0)
                     throw new SQLException("Can't update");
@@ -256,7 +245,6 @@ public class WeatherProvider extends ContentProvider
                 {
                     for (ContentValues value : values)
                     {
-                        normalizeDate(value);
                         long id = db.insert(WeatherEntries.TABLE_NAME, null, value);
                         if (id != -1)
                             count++;
