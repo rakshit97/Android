@@ -1,6 +1,7 @@
 package com.example.rakshit.sunshine.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -21,11 +22,13 @@ public class WeatherProvider extends ContentProvider
     static final int WEATHER = 100;
     static final int WEATHER_WITH_LOCATION = 101;
     static final int WEATHER_WITH_LOCATION_AND_DATE = 102;
+    static final int WEATHER_WITH_ID = 103;
     static final int LOCATION = 200;
 
     static
     {
         uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER, WEATHER);
+        uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER + "/#", WEATHER_WITH_ID);
         uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER + "/*", WEATHER_WITH_LOCATION);
         uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_WEATHER + "/*/#", WEATHER_WITH_LOCATION_AND_DATE);
         uriMatcher.addURI(WeatherContract.CONTENT_AUTHORITY, WeatherContract.PATH_LOCATION, LOCATION);
@@ -41,7 +44,7 @@ public class WeatherProvider extends ContentProvider
             + LocationEntries.TABLE_NAME + " ON "
             + WeatherEntries.TABLE_NAME + "." + WeatherEntries.COLUMN_LOC_KEY
             + "=" + LocationEntries.TABLE_NAME + "."
-            + LocationEntries._ID);
+            + LocationEntries.COLUMN_ID);
     }
 
     //location.city = ?
@@ -106,6 +109,8 @@ public class WeatherProvider extends ContentProvider
                 return  WeatherEntries.MIME_LIST;
             case WEATHER_WITH_LOCATION_AND_DATE:
                 return WeatherEntries.MIME_ITEM;
+            case WEATHER_WITH_ID:
+                return WeatherEntries.MIME_ITEM;
             case LOCATION:
                 return LocationEntries.MIME_LIST;
             default:
@@ -129,6 +134,9 @@ public class WeatherProvider extends ContentProvider
                 break;
             case WEATHER:
                 cursor = dbHelper.getReadableDatabase().query(WeatherEntries.TABLE_NAME, strings, s, strings1, null, null, s1);
+                break;
+            case WEATHER_WITH_ID:
+                cursor = dbHelper.getReadableDatabase().query(WeatherEntries.TABLE_NAME, strings, WeatherEntries.COLUMN_ID + "=?", new String[]{String.valueOf(ContentUris.parseId(uri))}, null, null, s1);
                 break;
             case LOCATION:
                 cursor = dbHelper.getReadableDatabase().query(LocationEntries.TABLE_NAME, strings, s, strings1, null, null, s1);;

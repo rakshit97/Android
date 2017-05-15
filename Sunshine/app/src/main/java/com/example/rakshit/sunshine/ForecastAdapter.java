@@ -41,6 +41,7 @@ public class ForecastAdapter extends CursorAdapter
     public void bindView(View view, Context context, Cursor cursor)
     {
         ViewHolder holder = (ViewHolder) view.getTag();
+        //Log.e("adapter", "id="+cursor.getLong(cursor.getColumnIndexOrThrow(WeatherEntries._ID)));
         String day = getDay(cursor.getLong(cursor.getColumnIndexOrThrow(WeatherEntries.COLUMN_DATE)));
         String desc = cursor.getString(cursor.getColumnIndexOrThrow(WeatherEntries.COLUMN_SHORT_DESC));
         double x = cursor.getDouble(cursor.getColumnIndexOrThrow(WeatherEntries.COLUMN_MAX_TEMP));
@@ -84,19 +85,20 @@ public class ForecastAdapter extends CursorAdapter
         return position==0?TYPE_TODAY:TYPE_OTHERS;
     }
 
-    private String getDay(long time)
+    public String getDay(long time)
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time*1000L);
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        int today = getToday();
 
         if (day==getToday())
         {
-            String ret =  new SimpleDateFormat("MMM D").format(new Date(time * 1000L));
+            String ret =  new SimpleDateFormat("MMM dd").format(new Date(time * 1000L));
             return "Today, "+ret;
         }
-        else if (day==((getToday()+1)%8)+1)
+        else if (day==(getToday()+1)%8)
+            return "Tomorrow";
+        if (getToday()==7 && day==1)
             return "Tomorrow";
         return days[day-1];
     }

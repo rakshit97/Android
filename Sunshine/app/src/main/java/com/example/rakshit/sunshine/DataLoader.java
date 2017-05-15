@@ -54,8 +54,8 @@ public class DataLoader extends AsyncTaskLoader<Cursor>
     private void checkLocation(Vector<ContentValues> v)
     {
         ContentValues cv = v.get(0);
-        long id = cv.getAsLong(LocationEntries._ID);
-        Cursor cursor = getContext().getContentResolver().query(LocationEntries.CONTENT_URI, null, LocationEntries._ID+"=?", new String[]{String.valueOf(id)}, null);
+        long id = cv.getAsLong(LocationEntries.COLUMN_ID);
+        Cursor cursor = getContext().getContentResolver().query(LocationEntries.CONTENT_URI, null, LocationEntries.COLUMN_ID+"=?", new String[]{String.valueOf(id)}, null);
         if (cursor.getCount()==0)
         {
             ContentUris.parseId(getContext().getContentResolver().insert(LocationEntries.CONTENT_URI, cv));

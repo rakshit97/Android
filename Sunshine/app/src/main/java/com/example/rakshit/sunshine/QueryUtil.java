@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Vector;
 
 public class QueryUtil
@@ -133,6 +134,8 @@ public class QueryUtil
             {
                 JSONObject item = list.getJSONObject(i);
                 long time = item.getLong("dt");
+                if(time*1000L < Calendar.getInstance().getTimeInMillis())
+                    continue;
                 double pressure = item.getDouble("pressure");
                 double humidity = item.getDouble("humidity");
                 double windSpeed = item.getDouble("speed");
@@ -151,7 +154,7 @@ public class QueryUtil
                 }
                 longDesc = builder.toString().trim();
                 ContentValues cv = new ContentValues();
-                cv.put(WeatherEntries._ID, i+1);
+                cv.put(WeatherEntries.COLUMN_ID, i+1);
                 cv.put(WeatherEntries.COLUMN_LOC_KEY, cityId);
                 cv.put(WeatherEntries.COLUMN_DATE, time);
                 cv.put(WeatherEntries.COLUMN_MAX_TEMP, temp_max);
@@ -165,7 +168,7 @@ public class QueryUtil
                 cv.put(WeatherEntries.COLUMN_WIND_DIRECTION, windDir);
                 cvv.add(cv);
             }
-            cv_city.put(LocationEntries._ID, cityId);
+            cv_city.put(LocationEntries.COLUMN_ID, cityId);
             cv_city.put(LocationEntries.COLUMN_CITY, cityName.toLowerCase());
             cv_city.put(LocationEntries.COLUMN_LATITUDE, latitude);
             cv_city.put(LocationEntries.COLUMN_LONGITUDE, longitude);

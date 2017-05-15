@@ -19,6 +19,7 @@ public class WeatherContract
         public static final String MIME_LIST = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
         public static final String MIME_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_LOC_KEY = "location_id";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_MAX_TEMP = "max";
@@ -76,6 +77,7 @@ public class WeatherContract
         public static final String MIME_LIST = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
         public static final String MIME_ITEM = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
 
+        public static final String COLUMN_ID = "l_id";
         public static final String COLUMN_CITY = "city";
         public static final String COLUMN_LATITUDE = "lat";
         public static final String COLUMN_LONGITUDE = "long";
