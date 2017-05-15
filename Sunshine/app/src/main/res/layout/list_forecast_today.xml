@@ -16,14 +16,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_today_date"
+            android:id="@id/tv_day"
             android:hint="Today, May 13"
             android:textAllCaps="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_today_max"
+            android:id="@id/tv_max_temp"
             android:layout_marginTop="16dp"
             android:hint="38"
             android:textAllCaps="true"/>
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_today_min"
+            android:id="@+id/tv_min_temp"
             android:hint="23"
             android:textAllCaps="true"/>
     </LinearLayout>
@@ -48,13 +48,14 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:src="@drawable/ic_launcher"
+            android:id="@id/icon"
             android:layout_weight="1"
             android:scaleType="centerCrop"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_today_desc"
+            android:id="@id/tv_desc"
             android:layout_marginTop="8dp"
             android:hint="Clear"
             android:textAllCaps="true"/>
