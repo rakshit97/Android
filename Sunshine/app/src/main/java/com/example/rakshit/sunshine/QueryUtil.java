@@ -134,7 +134,12 @@ public class QueryUtil
             {
                 JSONObject item = list.getJSONObject(i);
                 long time = item.getLong("dt");
-                if(time*1000L < Calendar.getInstance().getTimeInMillis())
+                Calendar c1 = Calendar.getInstance();
+                c1.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+                int today = c1.get(Calendar.DAY_OF_YEAR);
+                c1.setTimeInMillis(time*1000L);
+                int day = c1.get(Calendar.DAY_OF_YEAR);
+                if(day<today)
                     continue;
                 double pressure = item.getDouble("pressure");
                 double humidity = item.getDouble("humidity");

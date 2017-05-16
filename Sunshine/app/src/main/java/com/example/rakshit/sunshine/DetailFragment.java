@@ -32,7 +32,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     Uri uri;
     private ShareActionProvider shareActionProvider;
     String shareable="";
+    String day;
 
+    TextView tv_day;
     TextView tv_date;
     TextView tv_max;
     TextView tv_min;
@@ -56,11 +58,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         setHasOptionsMenu(true);
         uri = getActivity().getIntent().getData();
+        day = getActivity().getIntent().getStringExtra("day");
 
         LoaderManager loaderManager = getActivity().getSupportLoaderManager();
         loaderManager.initLoader(0, null, this);
 
-        tv_date = (TextView) rootView.findViewById(R.id.tv_day);
+        tv_day = (TextView) rootView.findViewById(R.id.tv_day);
+        tv_date = (TextView) rootView.findViewById(R.id.tv_date);
         tv_max = (TextView) rootView.findViewById(R.id.tv_max_temp);
         tv_min = (TextView) rootView.findViewById(R.id.tv_min_temp);
         tv_desc = (TextView) rootView.findViewById(R.id.tv_desc);
@@ -134,6 +138,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         String wind = "Wind: " + String.valueOf(windspeed) + unit + direction[Math.round(data.getInt(data.getColumnIndexOrThrow(WeatherEntries.COLUMN_WIND_DIRECTION))/45)%8];
         String pressure = "Pressure: " + String.valueOf(data.getDouble(data.getColumnIndexOrThrow(WeatherEntries.COLUMN_PRESSURE))) + " hPa";
 
+        tv_day.setText(day);
         tv_date.setText(date);
         tv_max.setText(max);
         tv_min.setText(min);

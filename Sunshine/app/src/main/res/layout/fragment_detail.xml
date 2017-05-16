@@ -12,13 +12,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Today"
+        android:id="@+id/tv_day"
+        android:hint="Today"
         android:textAllCaps="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_day"
+        android:id="@+id/tv_date"
         android:hint="May 15"
         android:textAllCaps="true"/>
 

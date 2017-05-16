@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rakshit.sunshine.data.WeatherContract;
@@ -62,6 +64,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long id)
             {
                 Intent intent = new Intent(getContext(), DetailActivity.class).setData(ContentUris.withAppendedId(WeatherContract.WeatherEntries.CONTENT_URI, id));
+                TextView tv_day = (TextView) view.findViewById(R.id.tv_day);
+                String day = tv_day.getText().toString().trim();
+                if(day.contains("Today"))
+                {
+                    day = "TODAY";
+                }
+                intent.putExtra("day", day);
                 startActivity(intent);
             }
         });
@@ -73,7 +82,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
-        rootView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = preferences.getString(getString(R.string.location_key), getString(R.string.location_default_value)).toLowerCase();
         if(i==1)
