@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     TextView tv_max;
     TextView tv_min;
     TextView tv_desc;
-    ImageView tv_icon;
+    ImageView iv_icon;
     TextView tv_humidity;
     TextView tv_wind;
     TextView tv_pressure;
@@ -68,7 +68,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         tv_max = (TextView) rootView.findViewById(R.id.tv_max_temp);
         tv_min = (TextView) rootView.findViewById(R.id.tv_min_temp);
         tv_desc = (TextView) rootView.findViewById(R.id.tv_desc);
-        tv_icon = (ImageView) rootView.findViewById(R.id.icon);
+        iv_icon = (ImageView) rootView.findViewById(R.id.icon);
         tv_humidity = (TextView) rootView.findViewById(R.id.tv_humidity);
         tv_wind = (TextView) rootView.findViewById(R.id.tv_wind);
         tv_pressure = (TextView) rootView.findViewById(R.id.tv_pressure);
@@ -131,7 +131,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             windspeed*=3.6;
             unit = " km/h  ";
         }
-        else if (unit.equals(getString(R.string.units_fahrenheit_value))) {
+        else if (unit.equals(getString(R.string.units_fahrenheit_value)))
+        {
             windspeed *= 2.23693629;
             unit = " mph  ";
         }
@@ -146,6 +147,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         tv_humidity.setText(humidity);
         tv_wind.setText(wind);
         tv_pressure.setText(pressure);
+        iv_icon.setImageResource(ForecastAdapter.getWeatherArt(data.getInt(data.getColumnIndexOrThrow(WeatherEntries.COLUMN_WEATHER_ID))));
         shareable = date+"\n"+max+"/"+min+" - "+desc+"\n"+humidity+"\n"+wind+"\n"+pressure;
     }
 

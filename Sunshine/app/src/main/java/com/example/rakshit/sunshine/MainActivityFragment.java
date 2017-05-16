@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -86,12 +85,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         String location = preferences.getString(getString(R.string.location_key), getString(R.string.location_default_value)).toLowerCase();
         if(i==1)
         {
-            String unit = preferences.getString(getString(R.string.units_key), getString(R.string.units_default_value));
 
             Uri baseUri = Uri.parse(WEATHER_REQUEST_URL);
             Uri.Builder uriBuilder = baseUri.buildUpon();
             uriBuilder.appendQueryParameter("q", location);
-            uriBuilder.appendQueryParameter("units", unit);
+            uriBuilder.appendQueryParameter("units", "metric");
             uriBuilder.appendQueryParameter("appid", BuildConfig.API_KEY);
 
             return new DataLoader(getActivity(), uriBuilder.toString());
