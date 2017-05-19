@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">SpiderG</string>
+    <string name="settings">Settings</string>
+
+    <string name="label_player_pref">Open Video player as:</string>
+    <string name="label_autoplay_pref">Autostart?</string>
+
+    <!-- Preferences keys and values -->
+    <!-- Player Options -->
+    <string name="player_default_value" translatable="false">Fullscreen</string>
+    <string name="player_key" translatable="false">player</string>
+
+        <!-- Fullscreen -->
+        <string name="player_fullscreen_label">FullScreen</string>
+        <string name="player_fullscreen_value" translatable="false">fullscreen</string>
+
+        <!-- Floating -->
+        <string name="player_floating_label">Floating</string>
+        <string name="player_floating_value" translatable="false">floating</string>
+
+    <!-- Autoplay Options -->
+    <string name="autoplay_key" translatable="false">autoplay</string>
+</resources>
