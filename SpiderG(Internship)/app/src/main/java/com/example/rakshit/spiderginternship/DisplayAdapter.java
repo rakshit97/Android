@@ -22,12 +22,10 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
     private final Map<YouTubeThumbnailView, YouTubeThumbnailLoader> thumbnailToLoaders;
     private final ThumbnailListener thumbnailListener;
     private List<YouTubeVideoDataHolder> list;
-    private Activity activity;
 
     public DisplayAdapter(Activity context, List<YouTubeVideoDataHolder> data)
     {
         super(context, 0, data);
-        this.activity = context;
         this.list = data;
         thumbnailToLoaders = new HashMap<YouTubeThumbnailView, YouTubeThumbnailLoader>();
         thumbnailListener = new ThumbnailListener();
@@ -68,32 +66,45 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
         if (listItemView==null)
         {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_videos, parent, false);
-            YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView)listItemView.findViewById(R.id.thumbnail);
-            thumbnailView.setTag(curr.getVideoId());
-            thumbnailView.initialize(BuildConfig.API_KEY, thumbnailListener);
+            if (curr.isTag())
+            {
+                YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) listItemView.findViewById(R.id.thumbnail);
+                thumbnailView.setVisibility(View.VISIBLE);
+                thumbnailView.setTag(curr.getVideoId());
+                thumbnailView.initialize(BuildConfig.API_KEY, thumbnailListener);
+            }
         }
         else
         {
-            YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView)listItemView.findViewById(R.id.thumbnail);
-            YouTubeThumbnailLoader loader = thumbnailToLoaders.get(thumbnailView);
-            if (loader==null)
+            if(curr.isTag())
             {
-                thumbnailView.setTag(curr.getVideoId());
-            }
-            else
-            {
-                thumbnailView.setImageResource(R.drawable.ic_schedule_black_24dp);
-                loader.setVideo(curr.getVideoId());
+                YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) listItemView.findViewById(R.id.thumbnail);
+                thumbnailView.setVisibility(View.VISIBLE);
+                YouTubeThumbnailLoader loader = thumbnailToLoaders.get(thumbnailView);
+                if (loader == null)
+                    thumbnailView.setTag(curr.getVideoId());
+                else
+                {
+                    thumbnailView.setImageResource(R.drawable.ic_schedule_black_24dp);
+                    loader.setVideo(curr.getVideoId());
+                }
             }
         }
 
-        TextView name = (TextView)listItemView.findViewById(R.id.tv_name);
-        TextView desc = (TextView)listItemView.findViewById(R.id.tv_desc);
+        TextView name = (TextView) listItemView.findViewById(R.id.tv_name);
+           TextView desc = (TextView) listItemView.findViewById(R.id.tv_desc);
 
-        name.setText(curr.getVideoName());
-        desc.setText(curr.getVideoDesc());
+        if(!curr.isTag())
+        {
+            name.setText(curr.getVideoName());
+            desc.setText(curr.getVideoDesc());
+        }
+        else
+        {
+            name.setVisibility(View.GONE);
+            desc.setVisibility(View.GONE);
+        }
 
-        //listItemView.setTag(1, activity);
         return listItemView;
     }
 

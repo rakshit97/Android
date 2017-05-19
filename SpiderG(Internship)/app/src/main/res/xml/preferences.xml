@@ -2,13 +2,6 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:title="@string/label_player_pref"
-        android:entries="@array/player_labels"
-        android:entryValues="@array/player_values"
-        android:key="@string/player_key"
-        android:defaultValue="@string/player_default_value"/>
-
     <CheckBoxPreference
         android:title="@string/label_autoplay_pref"
         android:key="@string/autoplay_key"
