@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 {
     QuakeAdapter adapter;
     private static final String USGS_REQUEST_URL =
-            "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
     TextView empty_tv;

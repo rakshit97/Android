@@ -89,7 +89,7 @@ public class QueryUtil
             }
             else
             {
-                Log.e("QueryUtils", "Error response code" + connection.getResponseCode());
+                Log.e("QueryUtils", "Error response code: " + connection.getResponseCode() + connection.getResponseMessage());
             }
         }
         catch (IOException e)
