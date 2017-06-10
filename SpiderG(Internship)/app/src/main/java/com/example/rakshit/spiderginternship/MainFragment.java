@@ -6,6 +6,7 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +22,6 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -29,23 +29,10 @@ import static android.app.Activity.RESULT_OK;
 public class MainFragment extends Fragment
 {
     private static final String by = "By BeInspired";
+    YouTubeVideoDataHolder holder1 = new YouTubeVideoDataHolder("xp2qjshr-r4", "Retrain your Mind", 2, by);
+    YouTubeVideoDataHolder holder2 = new YouTubeVideoDataHolder("xp2qjshr-r4", "Retrain your Mind", 1, by);
 
-    public static final List<YouTubeVideoDataHolder> VIDEO_LIST;
-    static {
-        List<YouTubeVideoDataHolder> list = new ArrayList<>();
-        list.add(new YouTubeVideoDataHolder("xp2qjshr-r4", "Retrain your Mind", by, false));
-        list.add(new YouTubeVideoDataHolder("0U78LfCUU9o", "Keep going after your Dreams", by, true));
-        list.add(new YouTubeVideoDataHolder("jwjGw3BCryI", "Winner's Mindset", by, true));
-        list.add(new YouTubeVideoDataHolder("h52uKo6mris", "Your time is NOW", by, false));
-        list.add(new YouTubeVideoDataHolder("1KGU6iB5MVE", "No Excuses!", by, false));
-        list.add(new YouTubeVideoDataHolder("bYMUb4uQZoo", "Do what is Hard", by, false));
-        list.add(new YouTubeVideoDataHolder("HeGPn5zxegY", "The Winning Mentality", by, true));
-        list.add(new YouTubeVideoDataHolder("CPQ1budJRIQ", "Prove them Wrong", by, false));
-        list.add(new YouTubeVideoDataHolder("-iPLKdjtC6U", "How successful people think", by, true));
-        list.add(new YouTubeVideoDataHolder("1cRL9kpERkU", "Forget the Past", by, true));
-        VIDEO_LIST = Collections.unmodifiableList(list);
-    }
-
+    public ArrayList<YouTubeVideoDataHolder> VIDEO_LIST = new ArrayList<>();
     private static final int REQ_START_STANDALONE_PLAYER = 1;
     private static final int REQ_RESOLVE_SERVICE_MISSING = 2;
 
@@ -61,15 +48,41 @@ public class MainFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        VIDEO_LIST.add(new YouTubeVideoDataHolder("xp2qjshr-r4", "Retrain your Mind", 2, by));
+        VIDEO_LIST.add(new YouTubeVideoDataHolder("0U78LfCUU9o", "Keep going after your Dreams", 1, by));
         setHasOptionsMenu(true);
+
+        rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         final boolean auto = preferences.getBoolean(getString(R.string.autoplay_key), false);
 
-        ListView listView = (ListView)rootView.findViewById(R.id.list);
+        final ListView listView = (ListView)rootView.findViewById(R.id.list);
         adapter = new DisplayAdapter(getActivity(), VIDEO_LIST);
         listView.setAdapter(adapter);
+
+        FloatingActionButton bholder1 = (FloatingActionButton)rootView.findViewById(R.id.trigger_holder1);
+        FloatingActionButton bholder2 = (FloatingActionButton)rootView.findViewById(R.id.trigger_holder2);
+
+        bholder1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                adapter.add(holder1);
+                listView.smoothScrollToPosition(adapter.getCount());
+            }
+        });
+
+        bholder2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                adapter.add(holder2);
+                listView.smoothScrollToPosition(adapter.getCount());
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

@@ -3,6 +3,7 @@ package com.example.rakshit.spiderginternship;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +25,11 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
     private final ThumbnailListener thumbnailListener;
     private List<YouTubeVideoDataHolder> list;
 
-    public DisplayAdapter(Activity context, List<YouTubeVideoDataHolder> data)
+    public DisplayAdapter(Activity context, ArrayList<YouTubeVideoDataHolder> data)
     {
         super(context, 0, data);
         this.list = data;
-        thumbnailToLoaders = new HashMap<YouTubeThumbnailView, YouTubeThumbnailLoader>();
+        thumbnailToLoaders = new HashMap<>();
         thumbnailListener = new ThumbnailListener();
     }
 
@@ -58,7 +60,7 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(int position, View convertView, @NonNull ViewGroup parent)
     {
         View listItemView = convertView;
         YouTubeVideoDataHolder curr = getItem(position);
@@ -66,8 +68,9 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
         if (listItemView==null)
         {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_videos, parent, false);
-            if (curr.isTag())
+            if (curr.getTaggggg()==1)
             {
+                Log.e("adapter", "thumbnail1");
                 YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) listItemView.findViewById(R.id.thumbnail);
                 thumbnailView.setVisibility(View.VISIBLE);
                 thumbnailView.setTag(curr.getVideoId());
@@ -76,8 +79,10 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
         }
         else
         {
-            if(curr.isTag())
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_videos, parent, false);
+            if(curr.getTaggggg()==1)
             {
+                Log.e("adapter", "thumbnail2");
                 YouTubeThumbnailView thumbnailView = (YouTubeThumbnailView) listItemView.findViewById(R.id.thumbnail);
                 thumbnailView.setVisibility(View.VISIBLE);
                 YouTubeThumbnailLoader loader = thumbnailToLoaders.get(thumbnailView);
@@ -92,9 +97,9 @@ public class DisplayAdapter extends ArrayAdapter<YouTubeVideoDataHolder>
         }
 
         TextView name = (TextView) listItemView.findViewById(R.id.tv_name);
-           TextView desc = (TextView) listItemView.findViewById(R.id.tv_desc);
+        TextView desc = (TextView) listItemView.findViewById(R.id.tv_desc);
 
-        if(!curr.isTag())
+        if(curr.getTaggggg()==2)
         {
             name.setText(curr.getVideoName());
             desc.setText(curr.getVideoDesc());

@@ -4,12 +4,12 @@ public class YouTubeVideoDataHolder
 {
     private String videoId;
     private String videoName;
+    private int tag = 2;
     private String videoDesc;
-    private boolean tag;
     //if tag is true - only thumbnail
     //if tag is false, only text
 
-    public YouTubeVideoDataHolder(String videoId, String videoName, String videoDesc, boolean tag)
+    public YouTubeVideoDataHolder(String videoId, String videoName, int tag, String videoDesc)
     {
         this.videoId = videoId;
         this.videoName = videoName;
@@ -32,7 +32,7 @@ public class YouTubeVideoDataHolder
         return videoDesc;
     }
 
-    public boolean isTag()
+    public int getTaggggg()
     {
         return tag;
     }
