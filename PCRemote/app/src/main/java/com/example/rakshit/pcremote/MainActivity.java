@@ -16,10 +16,10 @@ import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity
 {
-    private String currPointer;
-    private View.OnTouchListener listener;
+    private String currPointer="";
     private RelativeLayout parent;
     private TextView tv;
+    Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,56 +28,99 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.text);
 
-        parent = (RelativeLayout)findViewById(R.id.parent);
+        parent = (RelativeLayout) findViewById(R.id.parent);
+        findViewById(R.id.button_connect).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                connect();
+            }
+        });
 
+        findViewById(R.id.button_disconnect).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                try
+                {
+                    socket.close();
+                }
+                catch (Exception e)
+                {
+                    Log.e("main", Log.getStackTraceString(e));
+                }
+            }
+        });
     }
 
-    public void connect(View view)
+    public void connect()
     {
-        new ASyncClass(parent).execute();
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+                try
+                {
+                    socket = new Socket(InetAddress.getByName("192.168.1.53"), 10000);
+                    socket.setKeepAlive(true);
+                    socket.setSendBufferSize(1024);
+                    /*BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    bw.write("PCRemote connecting...");
+                    bw.flush();*/
+                } catch (Exception e)
+                {
+                    Log.e("main", "" + Log.getStackTraceString(e));
+                }
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                new ASyncClass(parent).execute();
+            }
+        }.execute();
     }
 
-    class ASyncClass extends AsyncTask<Void, Void, String>
+    private class ASyncClass extends AsyncTask<Void, Void, Void>
     {
         BufferedWriter bw;
-        Socket socket;
 
-        public ASyncClass(View view)
+        ASyncClass(View view)
         {
-            listener = new View.OnTouchListener()
+            View.OnTouchListener listener = new View.OnTouchListener()
             {
                 @Override
                 public boolean onTouch(View view, MotionEvent event)
                 {
-                    if((event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_DOWN) && event.getAction()!=MotionEvent.ACTION_OUTSIDE)
+                    if ((event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_DOWN) && event.getAction() != MotionEvent.ACTION_OUTSIDE)
                     {
                         float x = event.getX();
                         float y = event.getY();
                         String sx = String.format("%08.3f", x);
                         String sy = String.format("%08.3f", y);
-                        Log.e("main", sx+" "+sy);
-                        tv.setText(sx+","+sy);
-                        currPointer = String.valueOf(sx+","+sy+",");
+                        tv.setText(sx + "," + sy);
+                        currPointer = String.valueOf(sx + "," + sy + ",");
                     }
                     return true;
                 }
             };
-            parent.setOnTouchListener(listener);
+            view.setOnTouchListener(listener);
         }
 
         @Override
-        protected String doInBackground(Void... voids)
+        protected Void doInBackground(Void... voids)
         {
             try
             {
-                socket = new Socket(InetAddress.getByName("192.168.1.53"), 10000);
-                socket.setKeepAlive(true);
-                socket.setSendBufferSize(1024);
                 bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                while(true)
+                while (true)
                 {
                     String msg = currPointer;
+                    Log.e("main", ""+msg);
                     bw.write(msg);
                     bw.flush();
                     Thread.sleep(1);
@@ -85,25 +128,21 @@ public class MainActivity extends AppCompatActivity
             }
             catch (Exception e)
             {
-                return e.getMessage();
+                Log.e("bg", Log.getStackTraceString(e));
             }
-            finally
-            {
-
-            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String s)
+        protected void onPostExecute(Void v)
         {
             try
             {
                 bw.close();
                 socket.close();
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
-                e.printStackTrace();
+                Log.e("main", Log.getStackTraceString(e));
             }
         }
     }
