@@ -41,7 +41,7 @@ public class DataLoader extends AsyncTaskLoader<Cursor>
         Vector<Vector<ContentValues>> retVector =  fetchData(url_string, city);
         checkLocation(retVector.get(1));
         getContext().getContentResolver().delete(WeatherEntries.CONTENT_URI, null, null);
-        ContentValues[] values = new ContentValues[retVector.get(0).size()];
+        ContentValues values[] = new ContentValues[retVector.get(0).size()];
         retVector.get(0).toArray(values);
         int count = getContext().getContentResolver().bulkInsert(WeatherEntries.CONTENT_URI, values);
         if (count<7)

@@ -8,4 +8,29 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ForecastTheme" parent="AppTheme">
+        <item name="actionBarStyle">@style/ForecastTheme.ActionBar</item>
+    </style>
+    
+    <style name="ForecastTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@color/colorPrimary</item>
+        <item name="logo">@drawable/ic_logo</item>
+        <item name="displayOptions">useLogo|showHome</item>
+    </style>
+
+    <style name="DetailTheme" parent="AppTheme">
+        <item name="actionBarStyle">@style/DetailTheme.ActionBar</item>
+    </style>
+
+    <style name="DetailTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@color/colorPrimary</item>
+        <item name="displayOptions">showHome|homeAsUp|showTitle</item>
+        <item name="android:title">@string/label_details</item>
+    </style>
+
+    <style name="SettingsTheme" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:title">@string/label_settings</item>
+    </style>
 </resources>
