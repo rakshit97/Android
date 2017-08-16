@@ -1,5 +1,6 @@
 package com.example.rakshit.firebaseauth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +23,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser()!=null)
+        {
+            startActivity(new Intent(this, ViewActivity.class));
+            finish();
+        }
+        setContentView(R.layout.activity_main);
 
         Button reg = (Button)findViewById(R.id.register);
         Button login = (Button)findViewById(R.id.login);
