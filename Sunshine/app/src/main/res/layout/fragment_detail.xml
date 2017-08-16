@@ -13,15 +13,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_day"
-        android:hint="Today"
-        android:textAllCaps="true"/>
+        tools:hint="Today"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_date"
-        android:hint="May 15"
-        android:textAllCaps="true"/>
+        tools:hint="May 15"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="16sp"
+        android:textColor="#646464"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,23 +42,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_max_temp"
-                android:hint="38"
-                android:textAllCaps="true"/>
+                tools:hint="38"
+                android:fontFamily="sans-serif-light"
+                android:textSize="96sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_min_temp"
                 android:layout_marginTop="8dp"
-                android:hint="24"
-                android:textAllCaps="true"/>
+                tools:hint="24"
+                android:fontFamily="sans-serif-light"
+                android:textSize="48sp"
+                android:textColor="#646464"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginRight="36dp"
             android:gravity="center_horizontal">
 
             <ImageView
@@ -70,8 +75,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_desc"
                 android:layout_marginTop="8dp"
-                android:hint="Clear"
-                android:textAllCaps="true"/>
+                tools:hint="Clear"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="22sp"
+                android:textColor="#646464"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -80,23 +87,26 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_humidity"
         android:layout_marginTop="48dp"
-        android:hint="Humidity: 84%"
-        android:textAllCaps="true"/>
+        tools:hint="Humidity: 84%"
+        android:fontFamily="sans-serif-light"
+        android:textSize="22sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_wind"
-        android:layout_marginTop="12dp"
-        android:hint="Wind: 6 kmph NW"
-        android:textAllCaps="true"/>
+        android:layout_marginTop="4dp"
+        tools:hint="Wind: 6 kmph NW"
+        android:fontFamily="sans-serif-light"
+        android:textSize="22sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_pressure"
-        android:layout_marginTop="12dp"
-        android:hint="Pressure: 1014 hPa"
-        android:textAllCaps="true"/>
+        android:layout_marginTop="4dp"
+        tools:hint="Pressure: 1014 hPa"
+        android:fontFamily="sans-serif-light"
+        android:textSize="22sp"/>
 
 </LinearLayout>

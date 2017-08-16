@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary"
+    android:baselineAligned="false"
+    android:paddingStart="60dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_margin="8dp"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@id/tv_day"
-            android:hint="Today, May 13"
-            android:textAllCaps="true"/>
+            tools:hint="Today, May 13"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@id/tv_max_temp"
-            android:layout_marginTop="16dp"
-            android:hint="38"
-            android:textAllCaps="true"/>
+            tools:hint="38"
+            android:fontFamily="sans-serif-light"
+            android:textSize="72sp"
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_min_temp"
-            android:hint="23"
-            android:textAllCaps="true"/>
+            tools:hint="23"
+            android:fontFamily="sans-serif-light"
+            android:textSize="36sp"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
     <LinearLayout
@@ -41,24 +50,24 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_margin="8dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal|bottom">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@id/icon"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@id/tv_desc"
-            android:layout_marginTop="8dp"
-            android:hint="Clear"
-            android:textAllCaps="true"/>
-
+            android:layout_gravity="bottom|center_horizontal"
+            tools:hint="Clear"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
-
 </LinearLayout>
