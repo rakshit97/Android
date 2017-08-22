@@ -9,6 +9,9 @@
     <string name="share">Share</string>
     <string name="format_temp"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
+    <string name="sync_account_type">sunshine.example.com</string>
+    <string name="content_authority">com.example.rakshit.sunshine</string>
+
 
     <!-- Preferences keys and values -->
     <!-- Location -->

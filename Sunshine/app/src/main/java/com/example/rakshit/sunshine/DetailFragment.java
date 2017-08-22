@@ -26,6 +26,7 @@ import com.example.rakshit.sunshine.data.WeatherContract.WeatherEntries;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
@@ -136,7 +137,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             windspeed *= 2.23693629;
             unit = " mph  ";
         }
-        String wind = "Wind: " + String.valueOf(windspeed) + unit + direction[Math.round(data.getInt(data.getColumnIndexOrThrow(WeatherEntries.COLUMN_WIND_DIRECTION))/45)%8];
+        String wind = "Wind: " + String.valueOf(String.format(Locale.getDefault(), "%.3f", windspeed)) + unit + direction[Math.round(data.getInt(data.getColumnIndexOrThrow(WeatherEntries.COLUMN_WIND_DIRECTION))/45)%8];
         String pressure = "Pressure: " + String.valueOf(data.getDouble(data.getColumnIndexOrThrow(WeatherEntries.COLUMN_PRESSURE))) + " hPa";
 
         tv_day.setText(day);

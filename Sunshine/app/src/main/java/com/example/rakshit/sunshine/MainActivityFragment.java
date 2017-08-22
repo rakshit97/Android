@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,17 +28,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rakshit.sunshine.data.WeatherContract;
+import com.example.rakshit.sunshine.sync.SunshineSyncAdapter;
 
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     ForecastAdapter adapter;
-    private static final String WEATHER_REQUEST_URL =
-            "http://api.openweathermap.org/data/2.5/forecast/daily?";
     private static final int NETWORK_LOADER_ID = 1;
     private static final int CURSOR_LOADER_ID = 2;
     public int flag = 2;
     LoaderManager loaderManager;
     View rootView;
+    private String url = "";
+    private boolean set = false;
+
+    Utility utility;
 
     public MainActivityFragment()
     {
@@ -50,6 +54,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     {
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
         setHasOptionsMenu(true);
+        utility = new Utility(getContext());
         loaderManager = getActivity().getLoaderManager();
         loaderManager.initLoader(CURSOR_LOADER_ID, null, this);
 
@@ -81,29 +86,21 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String location = preferences.getString(getString(R.string.location_key), getString(R.string.location_default_value)).toLowerCase();
         if(i==1)
         {
-
-            Uri baseUri = Uri.parse(WEATHER_REQUEST_URL);
-            Uri.Builder uriBuilder = baseUri.buildUpon();
-            uriBuilder.appendQueryParameter("q", location);
-            uriBuilder.appendQueryParameter("units", "metric");
-            uriBuilder.appendQueryParameter("appid", BuildConfig.API_KEY);
-
-            return new DataLoader(getActivity(), uriBuilder.toString());
+            return new DataLoader(getActivity(), utility.getURL());
         }
 
         else
         {
-            return new CursorLoader(getContext(), WeatherContract.WeatherEntries.buildUriWithLocation(location), null, null, null, null);
+            return new CursorLoader(getContext(), WeatherContract.WeatherEntries.buildUriWithLocation(utility.getLocation()), null, null, null, null);
         }
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor forecastDatas)
     {
+        Log.d("main", "load finished");
         rootView.findViewById(R.id.progress).setVisibility(View.GONE);
         rootView.findViewById(R.id.lv_forecast).setVisibility(View.VISIBLE);
         if(flag==2)
@@ -162,9 +159,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             if(net_info!=null && net_info.isConnected())
             {
                 flag=1;
-                loaderManager.initLoader(NETWORK_LOADER_ID, null, this);
+//                loaderManager.restartLoader(NETWORK_LOADER_ID, null, this);
+                SunshineSyncAdapter.syncImmediately(getActivity());
             }
         }
+
         else if(id == R.id.menu_map)
         {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
