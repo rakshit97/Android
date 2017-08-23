@@ -160,7 +160,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             {
                 flag=1;
 //                loaderManager.restartLoader(NETWORK_LOADER_ID, null, this);
-                SunshineSyncAdapter.syncImmediately(getActivity());
+                SunshineSyncAdapter.syncImmediately(getContext());
             }
         }
 
