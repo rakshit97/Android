@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Indiez(Internship)</string>
+    <string name="enter_word">Enter word to search</string>
+    <string name="no_results">No results found :(</string>
+</resources>
